@@ -32,39 +32,45 @@ const PROJECTS = [
 export default function ProjectsCarousel() {
   return (
     <section className="px-6 py-20 sm:px-10">
-      <h2 className="mb-10 text-3xl font-medium tracking-tight sm:text-4xl">
+      <h2 className="mb-10 text-4xl font-normal tracking-tight sm:text-6xl">
         Projects
       </h2>
 
-      <div className="snap-row -mx-6 flex gap-6 overflow-x-auto px-6 sm:-mx-10 sm:px-10">
+      <div className="snap-row -mx-6 flex gap-6 overflow-x-auto px-6 sm:-mx-10 sm:gap-8 sm:px-10">
         {PROJECTS.map((project) => (
           <article
             key={project.slug}
-            className="w-[85vw] shrink-0 sm:w-[32vw] sm:min-w-[320px]"
+            className="w-[85vw] shrink-0 sm:w-[46vw]"
           >
-            {project.image ? (
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm">
-                <Image
-                  src={project.image}
-                  alt={`${project.title} thumbnail`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ) : (
-              <PlaceholderImage
-                label={`${project.title} thumbnail`}
-                className="aspect-[4/3] w-full rounded-sm"
-              />
-            )}
-            <h3 className="mt-6 text-xl">{project.title}</h3>
-            <p className="mt-2 text-sm text-neutral-600">
-              {project.description}
-            </p>
-            <p className="text-sm text-neutral-500">{project.dates}</p>
             <Link
               href={`/${project.slug}`}
-              className="mt-4 inline-block rounded-full border border-neutral-300 px-4 py-2 text-sm hover:border-neutral-900 transition-colors"
+              className="block"
+              aria-label={`View ${project.title} case study`}
+            >
+              {project.image ? (
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm">
+                  <Image
+                    src={project.image}
+                    alt={`${project.title} thumbnail`}
+                    fill
+                    className="object-cover transition-transform duration-300 hover:scale-[1.03]"
+                  />
+                </div>
+              ) : (
+                <PlaceholderImage
+                  label={`${project.title} thumbnail`}
+                  className="aspect-[4/3] w-full rounded-sm"
+                />
+              )}
+            </Link>
+            <h3 className="mt-8 text-xl">{project.title}</h3>
+            <p className="mt-3 text-sm text-neutral-600">
+              {project.description}
+            </p>
+            <p className="mt-1 text-sm text-neutral-500">{project.dates}</p>
+            <Link
+              href={`/${project.slug}`}
+              className="mt-6 inline-block rounded-full border border-neutral-300 px-4 py-2 text-sm hover:border-neutral-900 transition-colors"
             >
               {project.cta}
             </Link>
