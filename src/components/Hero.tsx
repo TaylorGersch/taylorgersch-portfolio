@@ -15,16 +15,19 @@ export default function Hero() {
 
       <div className="mt-10 pb-16 sm:pb-20">
         <h1 className="text-4xl leading-[1.15] font-normal tracking-tight text-neutral-900 sm:text-6xl">
-          Strategy-led design for products that matter. Combining research,
-          UX/UI, and inclusive design principles to solve complex problems.
+          Strategy-led design for products that matter.
+          <br />
+          Combining research, UX/UI, and inclusive design principles to solve
+          complex problems.
         </h1>
 
         <div className="mt-8 flex sm:justify-end">
-          <p className="max-w-xl text-neutral-600">
+          <p className="max-w-2xl text-neutral-600">
             Every project begins with understanding the people behind the
-            problem. By partnering with cross-functional teams, I help build
-            products that balance user needs with business goals and create
-            lasting value for everyone.
+            problem. By partnering with
+            <br />
+            cross-functional teams, I help build products that balance user
+            needs with business goals and create lasting value for everyone.
           </p>
         </div>
       </div>

@@ -36,7 +36,7 @@ export default function ProjectsCarousel() {
         Projects
       </h2>
 
-      <div className="snap-row -mx-6 flex gap-6 overflow-x-auto px-6 sm:-mx-10 sm:gap-8 sm:px-10">
+      <div className="snap-row -mr-6 flex gap-6 overflow-x-auto pr-6 sm:-mr-10 sm:gap-8 sm:pr-10">
         {PROJECTS.map((project) => (
           <article
             key={project.slug}

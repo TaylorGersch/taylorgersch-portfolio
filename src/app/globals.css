@@ -8,7 +8,16 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
+  /*
+   * "Helvetica Neue" is referenced by name (not embedded as a font file).
+   * Mac/iOS visitors already have it installed system-side, so it renders
+   * with the real thing; everyone else falls back to Helvetica/Arial, then
+   * Inter (the closest-feeling webfont), then a generic sans-serif.
+   * We deliberately don't self-host Helvetica Neue — it's a licensed
+   * commercial typeface and Apple's OS license doesn't permit redistributing
+   * the font file on a public website.
+   */
+  --font-sans: "Helvetica Neue", Helvetica, Arial, var(--font-inter);
 }
 
 body {
