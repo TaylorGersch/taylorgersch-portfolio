@@ -1,3 +1,4 @@
+import Image from "next/image";
 import PlaceholderImage from "./PlaceholderImage";
 
 const EXPLORE = [
@@ -5,16 +6,19 @@ const EXPLORE = [
     title: "TruStage",
     description:
       "Complete website redesign and component system for insurance provider, informed by user research and cross-functional collaboration.",
+    image: "/images/trustage.webp",
   },
   {
     title: "Hinge Health",
     description:
       "Led research, strategy, and north star vision for Medicare product expansion, identifying older adults' unique needs to inform three strategic focus areas for aging safely at home.",
+    image: "/images/hinge-health.webp",
   },
   {
     title: "FLYR Labs",
     description:
       "Partnered with AI-powered airline revenue platform to design website and design system, establishing content strategy and visual direction that contributed to a 45% increase in enterprise client meetings within two months of launch.",
+    image: "/images/flyr-labs.webp",
   },
 ];
 
@@ -33,10 +37,21 @@ export default function ExploreSection() {
           >
             <h3 className="text-xl">{item.title}</h3>
             <p className="text-sm text-neutral-600">{item.description}</p>
-            <PlaceholderImage
-              label={`${item.title} image`}
-              className="aspect-[16/10] w-full rounded-sm"
-            />
+            {item.image ? (
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-sm">
+                <Image
+                  src={item.image}
+                  alt={`${item.title}`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <PlaceholderImage
+                label={`${item.title} image`}
+                className="aspect-[16/10] w-full rounded-sm"
+              />
+            )}
           </div>
         ))}
       </div>

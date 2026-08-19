@@ -1,4 +1,4 @@
-import PlaceholderImage from "./PlaceholderImage";
+import Image from "next/image";
 
 const COLUMNS = [
   {
@@ -47,10 +47,14 @@ export default function AboutSection() {
           <h2 className="mb-8 text-3xl font-medium tracking-tight sm:text-4xl">
             About
           </h2>
-          <PlaceholderImage
-            label="About / studio photo"
-            className="aspect-[3/4] w-full max-w-sm rounded-sm bg-neutral-800 text-neutral-400"
-          />
+          <div className="relative aspect-[3/4] w-full max-w-sm overflow-hidden rounded-sm">
+            <Image
+              src="/images/about.webp"
+              alt="Taylor Gersch"
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">

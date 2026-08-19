@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import PlaceholderImage from "./PlaceholderImage";
 
@@ -8,6 +9,7 @@ const PROJECTS = [
     description: "Strategic product design across consumer and enterprise platforms",
     dates: "2024—2025",
     cta: "Read More",
+    image: "/images/betterup-thumb.png",
   },
   {
     slug: "airbnb",
@@ -15,6 +17,7 @@ const PROJECTS = [
     description: "Internal tooling redesign and design system development",
     dates: "2020–2022",
     cta: "Read more",
+    image: "/images/airbnb-thumb.jpg",
   },
   {
     slug: "rutter",
@@ -22,6 +25,7 @@ const PROJECTS = [
     description: "Product, marketing, and brand design for financial integration platform",
     dates: "2023–Present",
     cta: "Read more",
+    image: "/images/rutter-thumb.png",
   },
 ];
 
@@ -38,10 +42,21 @@ export default function ProjectsCarousel() {
             key={project.slug}
             className="w-[85vw] shrink-0 sm:w-[32vw] sm:min-w-[320px]"
           >
-            <PlaceholderImage
-              label={`${project.title} thumbnail`}
-              className="aspect-[4/3] w-full rounded-sm"
-            />
+            {project.image ? (
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm">
+                <Image
+                  src={project.image}
+                  alt={`${project.title} thumbnail`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <PlaceholderImage
+                label={`${project.title} thumbnail`}
+                className="aspect-[4/3] w-full rounded-sm"
+              />
+            )}
             <h3 className="mt-6 text-xl">{project.title}</h3>
             <p className="mt-2 text-sm text-neutral-600">
               {project.description}

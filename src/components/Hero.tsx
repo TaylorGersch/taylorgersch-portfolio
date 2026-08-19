@@ -1,12 +1,17 @@
-import PlaceholderImage from "./PlaceholderImage";
+import Image from "next/image";
 
 export default function Hero() {
   return (
     <section className="px-6 pt-6 sm:px-10">
-      <PlaceholderImage
-        label="Hero image — replace with public/images/hero.jpg"
-        className="h-[45vh] w-full rounded-sm sm:h-[55vh]"
-      />
+      <div className="relative h-[45vh] w-full overflow-hidden rounded-sm sm:h-[55vh]">
+        <Image
+          src="/images/hero.webp"
+          alt="Taylor Gersch"
+          fill
+          priority
+          className="object-cover"
+        />
+      </div>
 
       <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2">
         <h1 className="text-4xl leading-[1.1] font-medium tracking-tight text-neutral-900 sm:text-5xl">
