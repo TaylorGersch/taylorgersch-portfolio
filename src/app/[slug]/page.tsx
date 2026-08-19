@@ -12,6 +12,7 @@ import {
   SubSection,
   ImageBlock,
   Stub,
+  Quote,
 } from "@/components/case-study/CaseStudyBlocks";
 
 export function generateStaticParams() {
@@ -34,7 +35,7 @@ export default async function CaseStudyPage({
 
   const { content } = await compileMDX<CaseStudyFrontmatter>({
     source: source!.content,
-    components: { TwoCol, SubSection, ImageBlock, Stub },
+    components: { TwoCol, SubSection, ImageBlock, Stub, Quote },
     options: { parseFrontmatter: false },
   });
 

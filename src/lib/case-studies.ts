@@ -11,7 +11,8 @@ export type CaseStudyFrontmatter = {
   intro: string;
   heroType: "gradient-typewriter" | "photo";
   heroText?: string; // used by gradient-typewriter hero
-  heroLabel?: string; // placeholder label used by photo hero
+  heroLabel?: string; // placeholder label used by photo hero (when no real image is available)
+  heroImage?: string; // real photo path (e.g. "/images/trustage.webp"); falls back to a placeholder when omitted
 };
 
 export function getAllCaseStudySlugs(): string[] {

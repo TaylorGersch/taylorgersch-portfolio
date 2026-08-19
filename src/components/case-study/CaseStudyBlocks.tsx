@@ -67,6 +67,23 @@ export function SubSection({
   );
 }
 
+export function Quote({
+  text,
+  attribution,
+}: {
+  text: string;
+  attribution: string;
+}) {
+  return (
+    <div className="border-t border-neutral-200 px-6 py-14 sm:px-10">
+      <p className="max-w-3xl text-2xl leading-snug text-neutral-800 sm:text-3xl">
+        &ldquo;{text}&rdquo;
+      </p>
+      <p className="mt-4 text-sm text-neutral-500">— {attribution}</p>
+    </div>
+  );
+}
+
 export function ImageBlock({
   label,
   ratio = "aspect-[16/10]",
