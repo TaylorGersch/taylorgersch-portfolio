@@ -2,25 +2,135 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #111111;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-inter);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ============================================================
+   CLIENT LOGO CAROUSEL
+   Ported from the original Squarespace code-injection embed.
+   Customize via the CSS variables below.
+   ============================================================ */
+.logo-carousel {
+  --logo-bg: #ffffff;
+  --logo-height: 28px;
+  --logo-gap: 72px;
+  --logo-speed: 32s;
+  --fade-width: 120px;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--logo-bg);
+  padding: 32px 0;
+}
+
+.logo-carousel::before,
+.logo-carousel::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--fade-width);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.logo-carousel::before {
+  left: 0;
+  background: linear-gradient(to right, var(--logo-bg) 0%, transparent 100%);
+}
+
+.logo-carousel::after {
+  right: 0;
+  background: linear-gradient(to left, var(--logo-bg) 0%, transparent 100%);
+}
+
+.logo-track {
+  display: flex;
+  align-items: center;
+  gap: var(--logo-gap);
+  width: max-content;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  animation: logo-scroll var(--logo-speed) linear infinite;
+}
+
+.logo-carousel:hover .logo-track {
+  animation-play-state: paused;
+}
+
+.logo-track__cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.logo-track__item {
+  height: var(--logo-height);
+  width: auto;
+  display: block;
+  filter: grayscale(100%);
+  opacity: 0.55;
+}
+
+@keyframes logo-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-track {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .logo-carousel {
+    --logo-height: 22px;
+    --logo-gap: 48px;
+    --fade-width: 60px;
+  }
+}
+
+/* Horizontal snap carousel used for the Projects section */
+.snap-row {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.snap-row > * {
+  scroll-snap-align: start;
+}
+.snap-row::-webkit-scrollbar {
+  display: none;
+}
+.snap-row {
+  scrollbar-width: none;
+}
+
+/* Typewriter caret used on case-study hero titles */
+.typewriter-caret::after {
+  content: "|";
+  margin-left: 0.05em;
+  animation: caret-blink 1s step-end infinite;
+}
+@keyframes caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
