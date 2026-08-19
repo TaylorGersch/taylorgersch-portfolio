@@ -25,7 +25,7 @@ const EXPLORE = [
 export default function ExploreSection() {
   return (
     <section className="px-6 py-20 sm:px-10">
-      <h2 className="mb-10 text-3xl font-medium tracking-tight sm:text-4xl">
+      <h2 className="mb-10 text-4xl font-normal tracking-tight sm:text-6xl">
         Explore
       </h2>
 

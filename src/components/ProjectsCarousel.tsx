@@ -70,7 +70,7 @@ export default function ProjectsCarousel() {
             <p className="mt-1 text-sm text-neutral-500">{project.dates}</p>
             <Link
               href={`/${project.slug}`}
-              className="mt-6 inline-block rounded-full border border-neutral-300 px-4 py-2 text-sm hover:border-neutral-900 transition-colors"
+              className="mt-6 inline-block rounded-[4px] border border-neutral-300 px-4 py-2 text-sm hover:border-neutral-900 transition-colors"
             >
               {project.cta}
             </Link>
