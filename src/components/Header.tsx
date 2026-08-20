@@ -7,7 +7,7 @@ export default function Header() {
         Taylor Gersch
       </Link>
       <Link
-        href="/#contact"
+        href="/contact"
         className="text-sm text-neutral-700 hover:text-neutral-900 transition-colors"
       >
         Contact
