@@ -9,6 +9,8 @@ export default function Footer() {
         <div className="text-base leading-6 text-white">
           <a
             href="mailto:tgersch30@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
             className="hover:text-neutral-300 transition-colors"
           >
             tgersch30@gmail.com
