@@ -48,7 +48,7 @@ export default function ProjectsCarousel() {
               aria-label={`View ${project.title} case study`}
             >
               {project.image ? (
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm">
+                <div className="relative aspect-[4/3] w-full overflow-hidden">
                   <Image
                     src={project.image}
                     alt={`${project.title} thumbnail`}
@@ -59,7 +59,7 @@ export default function ProjectsCarousel() {
               ) : (
                 <PlaceholderImage
                   label={`${project.title} thumbnail`}
-                  className="aspect-[4/3] w-full rounded-sm"
+                  className="aspect-[4/3] w-full"
                 />
               )}
             </Link>

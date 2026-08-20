@@ -91,7 +91,7 @@ export function ImageBlock({
   label: string;
   ratio?: string;
 }) {
-  return <PlaceholderImage label={label} className={`w-full rounded-sm ${ratio}`} />;
+  return <PlaceholderImage label={label} className={`w-full ${ratio}`} />;
 }
 
 /**

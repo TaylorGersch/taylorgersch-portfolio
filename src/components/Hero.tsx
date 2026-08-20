@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <section className="px-6 pt-6 sm:px-10">
-      <div className="relative h-[45vh] w-full overflow-hidden rounded-sm sm:h-[55vh]">
+      <div className="relative h-[45vh] w-full overflow-hidden sm:h-[55vh]">
         <Image
           src="/images/hero.webp"
           alt="Taylor Gersch"

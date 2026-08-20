@@ -42,8 +42,8 @@ const COLUMNS = [
 export default function AboutSection() {
   return (
     <section className="bg-black px-6 py-20 text-white sm:px-10">
-      <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
-        <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm sm:aspect-auto">
+      <div className="grid grid-cols-1 gap-10 sm:grid-cols-[2fr_3fr] sm:gap-16">
+        <div className="relative aspect-[4/5] w-full overflow-hidden">
           <Image
             src="/images/about.webp"
             alt="Taylor Gersch"
@@ -53,14 +53,14 @@ export default function AboutSection() {
         </div>
 
         <div>
-          <h2 className="mb-10 text-3xl font-medium tracking-tight sm:text-4xl">
+          <h2 className="mb-10 text-4xl font-normal tracking-tight sm:text-6xl">
             About
           </h2>
 
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
             {COLUMNS.map((col) => (
               <div key={col.title}>
-                <h3 className="mb-4 text-2xl text-white">{col.title}</h3>
+                <h3 className="mb-8 text-2xl text-white">{col.title}</h3>
                 <ul className="space-y-1 text-base text-white">
                   {col.items.map((item) => (
                     <li key={item}>{item}</li>

@@ -22,7 +22,7 @@ export default function CaseStudyHero({
   return (
     <section className="px-6 pt-6 sm:px-10">
       {frontmatter.heroImage ? (
-        <div className="relative h-[45vh] w-full overflow-hidden rounded-sm sm:h-[55vh]">
+        <div className="relative h-[45vh] w-full overflow-hidden sm:h-[55vh]">
           <Image
             src={frontmatter.heroImage}
             alt={`${frontmatter.title} hero image`}
@@ -34,7 +34,7 @@ export default function CaseStudyHero({
       ) : (
         <PlaceholderImage
           label={frontmatter.heroLabel ?? `${frontmatter.title} hero image`}
-          className="h-[45vh] w-full rounded-sm sm:h-[55vh]"
+          className="h-[45vh] w-full sm:h-[55vh]"
         />
       )}
     </section>
