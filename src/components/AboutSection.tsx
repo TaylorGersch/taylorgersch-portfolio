@@ -41,8 +41,8 @@ const COLUMNS = [
 
 export default function AboutSection() {
   return (
-    <section className="bg-black px-6 py-20 text-white sm:px-10">
-      <div className="grid grid-cols-1 gap-10 sm:grid-cols-[2fr_3fr] sm:gap-16">
+    <section className="bg-black px-6 py-20 text-white sm:px-10 sm:py-28">
+      <div className="grid grid-cols-1 gap-10 sm:grid-cols-[2fr_3fr] sm:items-center sm:gap-16">
         <div className="relative aspect-[4/5] w-full overflow-hidden">
           <Image
             src="/images/about.webp"
@@ -53,14 +53,14 @@ export default function AboutSection() {
         </div>
 
         <div>
-          <h2 className="mb-10 text-4xl font-normal tracking-tight sm:text-6xl">
+          <h2 className="mb-16 text-4xl font-normal tracking-tight sm:mb-20 sm:text-6xl">
             About
           </h2>
 
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 sm:gap-y-16">
             {COLUMNS.map((col) => (
               <div key={col.title}>
-                <h3 className="mb-8 text-2xl text-white">{col.title}</h3>
+                <h3 className="mb-8 text-[31px] text-white">{col.title}</h3>
                 <ul className="space-y-1 text-base text-white">
                   {col.items.map((item) => (
                     <li key={item}>{item}</li>
