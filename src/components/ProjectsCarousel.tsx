@@ -9,7 +9,7 @@ const PROJECTS = [
     description: "Strategic product design across consumer and enterprise platforms",
     dates: "2024—2025",
     cta: "Read More",
-    image: "/images/betterup-thumb.png",
+    image: "/images/betterup-thumb.webp",
   },
   {
     slug: "airbnb",
@@ -25,7 +25,7 @@ const PROJECTS = [
     description: "Product, marketing, and brand design for financial integration platform",
     dates: "2023–Present",
     cta: "Read more",
-    image: "/images/rutter-thumb.png",
+    image: "/images/rutter-thumb.webp",
   },
 ];
 
