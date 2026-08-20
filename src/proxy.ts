@@ -24,8 +24,12 @@ export function proxy(request: NextRequest) {
 export const config = {
   // Run on every route except the lock page itself, its assets, and
   // Next's own internals — those must stay reachable or the gate can
-  // never be passed.
+  // never be passed. `images/` is excluded wholesale (not just
+  // lock-bg.webp) because next/image's optimizer fetches source files
+  // like /images/404-graphic.webp server-side, without the visitor's
+  // cookie, so a narrower exclusion would 307 those internal fetches
+  // and silently break the image.
   matcher: [
-    "/((?!locked|_next|favicon.ico|images/lock-bg.webp).*)",
+    "/((?!locked|_next|favicon.ico|images/).*)",
   ],
 };

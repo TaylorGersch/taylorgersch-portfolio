@@ -6,6 +6,7 @@ import {
   type CaseStudyFrontmatter,
 } from "@/lib/case-studies";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
+import SiteChrome from "@/components/SiteChrome";
 import {
   Meta,
   TwoCol,
@@ -42,18 +43,20 @@ export default async function CaseStudyPage({
   const fm = source!.frontmatter;
 
   return (
-    <article>
-      <CaseStudyHero frontmatter={fm} />
+    <SiteChrome>
+      <article>
+        <CaseStudyHero frontmatter={fm} />
 
-      <div className="px-6 pt-10 sm:px-10">
-        <h1 className="text-6xl leading-none font-medium tracking-tight text-neutral-300 sm:text-8xl">
-          {fm.title}
-        </h1>
-      </div>
+        <div className="px-6 pt-10 sm:px-10">
+          <h1 className="text-6xl leading-none font-medium tracking-tight text-neutral-300 sm:text-8xl">
+            {fm.title}
+          </h1>
+        </div>
 
-      <Meta category={fm.category} dates={fm.dates} intro={fm.intro} />
+        <Meta category={fm.category} dates={fm.dates} intro={fm.intro} />
 
-      {content}
-    </article>
+        {content}
+      </article>
+    </SiteChrome>
   );
 }
