@@ -69,7 +69,7 @@ export default async function CaseStudyPage({
         <CaseStudyHero frontmatter={fm} />
 
         <div className="px-6 pt-10 sm:px-10">
-          <h1 className="text-6xl leading-none font-medium tracking-tight text-neutral-300 sm:text-8xl">
+          <h1 className="text-6xl leading-none font-medium tracking-tight text-black sm:text-8xl">
             {fm.title}
           </h1>
         </div>

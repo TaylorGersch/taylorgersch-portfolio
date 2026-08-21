@@ -33,16 +33,16 @@ export function TwoCol({
   return (
     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
       <div>
-        <h4 className="mb-3 text-sm font-medium text-neutral-900">
+        <h4 className="mb-3 text-base font-light text-neutral-900">
           {overviewTitle}
         </h4>
-        <p className="text-sm text-neutral-600">{overview}</p>
+        <p className="text-base leading-7 text-black">{overview}</p>
       </div>
       <div>
-        <h4 className="mb-3 text-sm font-medium text-neutral-900">
+        <h4 className="mb-3 text-base font-light text-neutral-900">
           {problemTitle}
         </h4>
-        <p className="text-sm text-neutral-600">{problem}</p>
+        <p className="text-base leading-7 text-black">{problem}</p>
       </div>
     </div>
   );
@@ -67,51 +67,102 @@ export function Pair({ children }: { children: React.ReactNode }) {
  * spans the full height of the overview/problem (+ process/solution)
  * block next to it. `side` flips which edge the image sits on, so
  * sections can alternate left/right for visual rhythm.
+ *
+ * The eyebrow/title live here (not in <SubSection>) specifically so they
+ * share the same grid row as the image — the image's top edge lines up
+ * with the eyebrow, and the body content (passed as `children`) is
+ * vertically centered in the remaining space below the heading, matching
+ * the live Squarespace layout. The image renders at its native aspect
+ * ratio (no crop) via explicit width/height instead of `fill`, so
+ * `imageWidth`/`imageHeight` must match the source file's real pixel
+ * dimensions.
+ *
+ * Padding is asymmetric on purpose: the content column's outer margin is
+ * pulled in an extra 60px from the standard 40px edge margin (desktop and
+ * up only — mobile keeps the standard margin on both sides), while the
+ * image keeps the standard 40px edge margin regardless of which side it's
+ * on.
  */
 export function MediaSplit({
+  eyebrow,
+  title,
   image,
   imageAlt,
+  imageWidth,
+  imageHeight,
   side = "right",
-  ratio = "aspect-[4/5]",
   children,
 }: {
+  eyebrow?: string;
+  title?: string;
   image: string;
   imageAlt: string;
+  imageWidth: number;
+  imageHeight: number;
   side?: "left" | "right";
-  ratio?: string;
   children: React.ReactNode;
 }) {
+  const outerPadding =
+    side === "left" ? "sm:pl-10 sm:pr-[100px]" : "sm:pl-[100px] sm:pr-10";
+
   return (
-    <div className="grid grid-cols-1 gap-10 px-6 py-10 sm:grid-cols-2 sm:gap-12 sm:px-10 sm:py-14">
+    <div
+      className={`grid grid-cols-1 gap-10 px-6 py-10 sm:grid-cols-2 sm:gap-12 sm:py-14 ${outerPadding}`}
+    >
       <div
-        className={`flex flex-col gap-10 ${side === "left" ? "sm:order-2" : "sm:order-1"}`}
+        className={`flex flex-col ${side === "left" ? "sm:order-2" : "sm:order-1"}`}
       >
-        {children}
+        {eyebrow && <p className="text-sm text-neutral-500">{eyebrow}</p>}
+        {title && (
+          <h3 className="mt-2 mb-8 text-3xl tracking-tight text-neutral-800 sm:text-4xl">
+            {title}
+          </h3>
+        )}
+        <div className="flex flex-1 flex-col justify-center gap-10">
+          {children}
+        </div>
       </div>
       <div
-        className={`relative w-full overflow-hidden ${ratio} ${side === "left" ? "sm:order-1" : "sm:order-2"}`}
+        className={`relative w-full ${side === "left" ? "sm:order-1" : "sm:order-2"}`}
       >
-        <Image src={image} alt={imageAlt} fill className="object-cover" />
+        <Image
+          src={image}
+          alt={imageAlt}
+          width={imageWidth}
+          height={imageHeight}
+          sizes="(min-width: 640px) 50vw, 100vw"
+          className="h-auto w-full"
+        />
       </div>
     </div>
   );
 }
 
+/**
+ * Border-top + vertical-spacing wrapper only — no horizontal padding and
+ * no eyebrow/title of its own. When a section uses <MediaSplit>, the
+ * eyebrow/title are passed to <MediaSplit> instead (so they share its
+ * grid row with the image); <SubSection> just wraps it.
+ */
 export function SubSection({
   eyebrow,
   title,
   children,
 }: {
-  eyebrow: string;
-  title: string;
+  eyebrow?: string;
+  title?: string;
   children?: React.ReactNode;
 }) {
   return (
-    <div className="border-t border-neutral-200 px-6 py-14 sm:px-10">
-      <p className="text-sm text-neutral-500">{eyebrow}</p>
-      <h3 className="mt-2 mb-8 text-3xl tracking-tight text-neutral-800 sm:text-4xl">
-        {title}
-      </h3>
+    <div className="border-t border-neutral-200 py-14">
+      {eyebrow && (
+        <p className="px-6 text-sm text-neutral-500 sm:px-10">{eyebrow}</p>
+      )}
+      {title && (
+        <h3 className="mt-2 mb-8 px-6 text-3xl tracking-tight text-neutral-800 sm:px-10 sm:text-4xl">
+          {title}
+        </h3>
+      )}
       {children}
     </div>
   );
@@ -134,7 +185,8 @@ export function Quote({
   );
 }
 
-/** A single quote, unpadded — for use inside <QuotePair>. */
+/** A single quote, unpadded — for use inside <QuotePair>. Width-capped so
+ * lines wrap sooner instead of stretching across the whole column. */
 export function QuoteItem({
   text,
   attribution,
@@ -143,7 +195,7 @@ export function QuoteItem({
   attribution: string;
 }) {
   return (
-    <div>
+    <div className="max-w-sm">
       <p className="text-xl leading-snug text-neutral-800 sm:text-2xl">
         &ldquo;{text}&rdquo;
       </p>
@@ -152,10 +204,15 @@ export function QuoteItem({
   );
 }
 
-/** Two client quotes side by side on a light-grey band. */
+/**
+ * Two client quotes side by side on a light-grey band. Left edge matches
+ * the same pulled-in content margin used in <MediaSplit> (desktop/tablet
+ * only); vertical padding is ~70% taller than a standard <SubSection> band
+ * so the grey area has noticeably more presence.
+ */
 export function QuotePair({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid grid-cols-1 gap-10 bg-neutral-100 px-6 py-16 sm:grid-cols-2 sm:gap-16 sm:px-10">
+    <div className="grid grid-cols-1 gap-10 bg-neutral-100 px-6 py-16 sm:grid-cols-2 sm:gap-16 sm:py-[110px] sm:pl-[100px] sm:pr-10">
       {children}
     </div>
   );
@@ -196,8 +253,8 @@ export function Detail({
 }) {
   return (
     <div>
-      <h4 className="mb-3 text-sm font-medium text-neutral-900">{title}</h4>
-      <div className="max-w-2xl space-y-3 text-sm text-neutral-600">
+      <h4 className="mb-3 text-base font-light text-neutral-900">{title}</h4>
+      <div className="max-w-2xl space-y-3 text-base leading-7 text-black">
         {children}
       </div>
     </div>

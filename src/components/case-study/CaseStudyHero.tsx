@@ -28,7 +28,7 @@ export default function CaseStudyHero({
             alt={`${frontmatter.title} hero image`}
             fill
             priority
-            className="object-cover"
+            className="object-cover object-top"
           />
         </div>
       ) : (

@@ -43,7 +43,7 @@ export default function ImageCarousel({
 
   return (
     <div className="px-6 py-20 sm:px-10">
-      <div className="flex items-center gap-3 sm:gap-6">
+      <div className="flex items-center justify-center gap-3 sm:gap-6">
         <button
           type="button"
           onClick={() => go(-1)}
@@ -61,13 +61,25 @@ export default function ImageCarousel({
           </svg>
         </button>
 
-        <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-100">
-          <Image
-            src={current.src}
-            alt={current.alt}
-            fill
-            className="object-cover"
-          />
+        {/* Sized to match the homepage ProjectsCarousel's card dimensions
+            (85vw mobile / 46vw desktop, 4:3) — the single big 16:10 image
+            was reading far too large next to the rest of the page. */}
+        <div className="flex w-[85vw] flex-col gap-6 sm:w-[46vw]">
+          <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
+            <Image
+              src={current.src}
+              alt={current.alt}
+              fill
+              className="object-cover"
+            />
+          </div>
+
+          <div className="flex items-baseline gap-3 text-sm">
+            <span className="text-neutral-400">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span className="text-neutral-600">{current.caption}</span>
+          </div>
         </div>
 
         <button
@@ -86,13 +98,6 @@ export default function ImageCarousel({
             />
           </svg>
         </button>
-      </div>
-
-      <div className="mt-6 flex items-baseline gap-3 pl-[calc(20px+0.75rem)] text-sm sm:pl-[calc(20px+1.5rem)]">
-        <span className="text-neutral-400">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-        <span className="text-neutral-600">{current.caption}</span>
       </div>
     </div>
   );
