@@ -20,10 +20,12 @@ export function CarouselSlide(_props: SlideProps) {
 
 /**
  * Horizontally scrolling row of images — matches the homepage
- * ProjectsCarousel's look: the first card sits flush against the left
- * margin, at least two cards are fully visible with a third peeking in
- * from the right edge, and a single right-pointing arrow advances the
- * row by one card (there's no left arrow — same as the reference).
+ * ProjectsCarousel's look: the first card sits flush with the page's
+ * pulled-in content margin, at least two cards are fully visible with a
+ * third peeking in from the right edge. A single right-pointing arrow
+ * sits below the row (not overlapping the images) and advances by one
+ * card; the row is also mouse-drag-scrollable, not just arrow/touch
+ * scrollable.
  */
 export default function ImageCarousel({
   children,
@@ -35,6 +37,7 @@ export default function ImageCarousel({
     .map((el) => el.props as SlideProps);
 
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef({ dragging: false, startX: 0, startScrollLeft: 0 });
 
   if (slides.length === 0) return null;
 
@@ -42,15 +45,56 @@ export default function ImageCarousel({
     const el = scrollerRef.current;
     if (!el) return;
     const card = el.querySelector<HTMLElement>("[data-carousel-card]");
-    const step = card ? card.getBoundingClientRect().width + 24 : el.clientWidth * 0.8;
+    const step = card
+      ? card.getBoundingClientRect().width + 24
+      : el.clientWidth * 0.8;
     el.scrollBy({ left: step, behavior: "smooth" });
   };
 
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== "mouse") return; // let touch use native scrolling
+    const el = scrollerRef.current;
+    if (!el) return;
+    dragRef.current = {
+      dragging: true,
+      startX: e.clientX,
+      startScrollLeft: el.scrollLeft,
+    };
+    // Mandatory scroll-snap otherwise fights every scrollLeft assignment
+    // below and snaps straight back to the nearest card mid-drag.
+    el.style.scrollSnapType = "none";
+    el.setPointerCapture(e.pointerId);
+  };
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragRef.current.dragging) return;
+    const el = scrollerRef.current;
+    if (!el) return;
+    const dx = e.clientX - dragRef.current.startX;
+    el.scrollLeft = dragRef.current.startScrollLeft - dx;
+  };
+
+  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragRef.current.dragging) return;
+    dragRef.current.dragging = false;
+    const el = scrollerRef.current;
+    if (el) {
+      el.style.scrollSnapType = ""; // restore snap-to-card once released
+      if (el.hasPointerCapture(e.pointerId)) {
+        el.releasePointerCapture(e.pointerId);
+      }
+    }
+  };
+
   return (
-    <div className="relative py-20">
+    <div className="py-20">
       <div
         ref={scrollerRef}
-        className="snap-row flex gap-6 overflow-x-auto px-6 sm:px-10"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        className="snap-row flex cursor-grab gap-6 overflow-x-auto px-6 select-none active:cursor-grabbing sm:pr-10 sm:pl-[60px]"
       >
         {slides.map((slide, i) => (
           <div
@@ -63,30 +107,40 @@ export default function ImageCarousel({
                 src={slide.src}
                 alt={slide.alt}
                 fill
+                draggable={false}
                 className="object-cover"
               />
             </div>
-            <p className="text-sm text-neutral-600">{slide.caption}</p>
+            <div className="flex items-baseline gap-3 text-sm">
+              <span className="text-neutral-400">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="truncate text-neutral-600">
+                {slide.caption}
+              </span>
+            </div>
           </div>
         ))}
       </div>
 
-      <button
-        type="button"
-        onClick={scrollNext}
-        aria-label="Next image"
-        className="absolute top-1/2 right-4 hidden -translate-y-1/2 rounded-full border border-neutral-300 bg-white p-2 text-neutral-500 shadow-sm transition-colors hover:border-neutral-900 hover:text-neutral-900 sm:right-6 sm:flex"
-      >
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-          <path
-            d="M7.5 5L12.5 10L7.5 15"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
+      <div className="mt-6 flex justify-end px-6 sm:pr-10 sm:pl-[60px]">
+        <button
+          type="button"
+          onClick={scrollNext}
+          aria-label="Next image"
+          className="rounded-full border border-neutral-300 p-2 text-neutral-500 transition-colors hover:border-neutral-900 hover:text-neutral-900"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+            <path
+              d="M7.5 5L12.5 10L7.5 15"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 }

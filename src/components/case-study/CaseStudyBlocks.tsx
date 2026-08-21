@@ -214,12 +214,12 @@ export function QuoteItem({
 /**
  * Two client quotes side by side on a light-grey band. Left edge matches
  * the same pulled-in content margin used in <MediaSplit> (desktop/tablet
- * only); vertical padding gives generous breathing room without making
- * the band overly tall.
+ * only); vertical padding is generous — +100px top and bottom on top of
+ * the previous round's spacing.
  */
 export function QuotePair({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid grid-cols-1 gap-10 bg-neutral-100 px-6 py-16 sm:grid-cols-2 sm:gap-16 sm:py-20 sm:pl-[60px] sm:pr-10">
+    <div className="grid grid-cols-1 gap-10 bg-neutral-100 px-6 py-[164px] sm:grid-cols-2 sm:gap-16 sm:py-[180px] sm:pl-[60px] sm:pr-10">
       {children}
     </div>
   );
