@@ -128,13 +128,17 @@ export default function ImageCarousel({
             data-carousel-card
             className="flex w-[85vw] shrink-0 flex-col gap-6 sm:w-[46vw]"
           >
-            <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
+            {/* aspect-[3/2] matches these screenshots' real ~1.5 aspect
+                ratio almost exactly, so object-contain shows the full
+                image with little to no letterboxing instead of the
+                object-cover crop that was cutting off the sides. */}
+            <div className="relative aspect-[3/2] w-full overflow-hidden bg-neutral-100">
               <Image
                 src={slide.src}
                 alt={slide.alt}
                 fill
                 draggable={false}
-                className="object-cover"
+                className="object-contain"
               />
             </div>
             <div className="flex items-baseline gap-3 text-sm">
