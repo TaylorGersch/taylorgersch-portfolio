@@ -18,14 +18,40 @@ export function CarouselSlide(_props: SlideProps) {
   return null;
 }
 
+/** Shared prev/next chevron — module-level so it isn't recreated as a
+ * component on every render of <ImageCarousel>. */
+function ArrowIcon({ flipped }: { flipped?: boolean }) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+      <path
+        d={flipped ? "M12.5 5L7.5 10L12.5 15" : "M7.5 5L12.5 10L7.5 15"}
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 /**
  * Horizontally scrolling row of images — matches the homepage
  * ProjectsCarousel's look: the first card sits flush with the page's
  * pulled-in content margin, at least two cards are fully visible with a
- * third peeking in from the right edge. A single right-pointing arrow
- * sits below the row (not overlapping the images) and advances by one
- * card; the row is also mouse-drag-scrollable, not just arrow/touch
- * scrollable.
+ * third peeking in from the right edge.
+ *
+ * The left margin lives on a non-scrolling OUTER wrapper, not as padding
+ * on the scrollable element itself — same technique ProjectsCarousel
+ * uses. That matters because this row has `scroll-snap-type: x
+ * mandatory` (via the shared `.snap-row` class): a mandatory snap
+ * container "corrects" its scroll position to satisfy snap alignment as
+ * soon as it lays out, and padding-left on the scrollable element itself
+ * isn't part of that alignment reference — only `scroll-padding` is — so
+ * the browser silently scrolls the padding away on load, and the left
+ * margin visually disappears. Keeping the margin outside the scroller
+ * avoids the conflict entirely. The scroller then bleeds to the
+ * container's right edge via a negative margin + matching padding, the
+ * same peek-past-the-edge trick ProjectsCarousel uses on the right.
  */
 export default function ImageCarousel({
   children,
@@ -41,14 +67,14 @@ export default function ImageCarousel({
 
   if (slides.length === 0) return null;
 
-  const scrollNext = () => {
+  const scrollByCard = (dir: 1 | -1) => {
     const el = scrollerRef.current;
     if (!el) return;
     const card = el.querySelector<HTMLElement>("[data-carousel-card]");
     const step = card
       ? card.getBoundingClientRect().width + 24
       : el.clientWidth * 0.8;
-    el.scrollBy({ left: step, behavior: "smooth" });
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
   };
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -87,14 +113,14 @@ export default function ImageCarousel({
   };
 
   return (
-    <div className="py-20">
+    <div className="px-6 py-20 sm:pr-10 sm:pl-[60px]">
       <div
         ref={scrollerRef}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
-        className="snap-row flex cursor-grab gap-6 overflow-x-auto px-6 select-none active:cursor-grabbing sm:pr-10 sm:pl-[60px]"
+        className="snap-row -mr-6 flex cursor-grab gap-6 overflow-x-auto pr-6 select-none active:cursor-grabbing sm:-mr-10 sm:pr-10"
       >
         {slides.map((slide, i) => (
           <div
@@ -123,22 +149,22 @@ export default function ImageCarousel({
         ))}
       </div>
 
-      <div className="mt-6 flex justify-end px-6 sm:pr-10 sm:pl-[60px]">
+      <div className="mt-6 flex justify-between">
         <button
           type="button"
-          onClick={scrollNext}
+          onClick={() => scrollByCard(-1)}
+          aria-label="Previous image"
+          className="rounded-full border border-neutral-300 p-2 text-neutral-500 transition-colors hover:border-neutral-900 hover:text-neutral-900"
+        >
+          <ArrowIcon flipped />
+        </button>
+        <button
+          type="button"
+          onClick={() => scrollByCard(1)}
           aria-label="Next image"
           className="rounded-full border border-neutral-300 p-2 text-neutral-500 transition-colors hover:border-neutral-900 hover:text-neutral-900"
         >
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-            <path
-              d="M7.5 5L12.5 10L7.5 15"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <ArrowIcon />
         </button>
       </div>
     </div>
