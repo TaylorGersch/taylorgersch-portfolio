@@ -28,7 +28,8 @@ export default function CaseStudyHero({
             alt={`${frontmatter.title} hero image`}
             fill
             priority
-            className="object-cover object-top"
+            className="object-cover"
+            style={{ objectPosition: "center 30%" }}
           />
         </div>
       ) : (

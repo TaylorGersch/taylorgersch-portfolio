@@ -1,6 +1,6 @@
 "use client";
 
-import { Children, isValidElement, useState } from "react";
+import { Children, isValidElement, useRef } from "react";
 import Image from "next/image";
 
 type SlideProps = { src: string; alt: string; caption: string };
@@ -19,10 +19,11 @@ export function CarouselSlide(_props: SlideProps) {
 }
 
 /**
- * Single-slide image carousel with prev/next arrows and a small numbered
- * caption below — sized to match the section padding used by the
- * homepage's ProjectsCarousel, but showing one large slide at a time
- * instead of a scrolling row of cards.
+ * Horizontally scrolling row of images — matches the homepage
+ * ProjectsCarousel's look: the first card sits flush against the left
+ * margin, at least two cards are fully visible with a third peeking in
+ * from the right edge, and a single right-pointing arrow advances the
+ * row by one card (there's no left arrow — same as the reference).
  */
 export default function ImageCarousel({
   children,
@@ -33,72 +34,59 @@ export default function ImageCarousel({
     .filter(isValidElement)
     .map((el) => el.props as SlideProps);
 
-  const [index, setIndex] = useState(0);
-  const total = slides.length;
+  const scrollerRef = useRef<HTMLDivElement>(null);
 
-  if (total === 0) return null;
+  if (slides.length === 0) return null;
 
-  const go = (dir: number) => setIndex((i) => (i + dir + total) % total);
-  const current = slides[index];
+  const scrollNext = () => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>("[data-carousel-card]");
+    const step = card ? card.getBoundingClientRect().width + 24 : el.clientWidth * 0.8;
+    el.scrollBy({ left: step, behavior: "smooth" });
+  };
 
   return (
-    <div className="px-6 py-20 sm:px-10">
-      <div className="flex items-center justify-center gap-3 sm:gap-6">
-        <button
-          type="button"
-          onClick={() => go(-1)}
-          aria-label="Previous image"
-          className="shrink-0 rounded-full border border-neutral-300 p-2 text-neutral-500 transition-colors hover:border-neutral-900 hover:text-neutral-900"
-        >
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-            <path
-              d="M12.5 5L7.5 10L12.5 15"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-
-        {/* Sized to match the homepage ProjectsCarousel's card dimensions
-            (85vw mobile / 46vw desktop, 4:3) — the single big 16:10 image
-            was reading far too large next to the rest of the page. */}
-        <div className="flex w-[85vw] flex-col gap-6 sm:w-[46vw]">
-          <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
-            <Image
-              src={current.src}
-              alt={current.alt}
-              fill
-              className="object-cover"
-            />
+    <div className="relative py-20">
+      <div
+        ref={scrollerRef}
+        className="snap-row flex gap-6 overflow-x-auto px-6 sm:px-10"
+      >
+        {slides.map((slide, i) => (
+          <div
+            key={i}
+            data-carousel-card
+            className="flex w-[85vw] shrink-0 flex-col gap-6 sm:w-[46vw]"
+          >
+            <div className="relative aspect-[4/3] w-full overflow-hidden bg-neutral-100">
+              <Image
+                src={slide.src}
+                alt={slide.alt}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <p className="text-sm text-neutral-600">{slide.caption}</p>
           </div>
-
-          <div className="flex items-baseline gap-3 text-sm">
-            <span className="text-neutral-400">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <span className="text-neutral-600">{current.caption}</span>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => go(1)}
-          aria-label="Next image"
-          className="shrink-0 rounded-full border border-neutral-300 p-2 text-neutral-500 transition-colors hover:border-neutral-900 hover:text-neutral-900"
-        >
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
-            <path
-              d="M7.5 5L12.5 10L7.5 15"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
+        ))}
       </div>
+
+      <button
+        type="button"
+        onClick={scrollNext}
+        aria-label="Next image"
+        className="absolute top-1/2 right-4 hidden -translate-y-1/2 rounded-full border border-neutral-300 bg-white p-2 text-neutral-500 shadow-sm transition-colors hover:border-neutral-900 hover:text-neutral-900 sm:right-6 sm:flex"
+      >
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+          <path
+            d="M7.5 5L12.5 10L7.5 15"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
     </div>
   );
 }

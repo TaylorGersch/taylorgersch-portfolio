@@ -11,7 +11,7 @@ export function Meta({
   intro: string;
 }) {
   return (
-    <div className="grid grid-cols-1 gap-6 border-t border-neutral-200 px-6 py-10 sm:grid-cols-[1fr_1fr_2fr] sm:px-10">
+    <div className="grid grid-cols-1 gap-6 border-t border-neutral-200 px-6 py-10 sm:grid-cols-[1fr_1fr_2fr] sm:pr-10 sm:pl-[60px]">
       <p className="text-sm text-neutral-500">{category}</p>
       <p className="text-sm text-neutral-500">{dates}</p>
       <p className="text-neutral-700">{intro}</p>
@@ -33,16 +33,16 @@ export function TwoCol({
   return (
     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
       <div>
-        <h4 className="mb-3 text-base font-light text-neutral-900">
+        <h4 className="mb-3 text-lg font-light text-neutral-900">
           {overviewTitle}
         </h4>
-        <p className="text-base leading-7 text-black">{overview}</p>
+        <p className="text-base leading-6 text-black">{overview}</p>
       </div>
       <div>
-        <h4 className="mb-3 text-base font-light text-neutral-900">
+        <h4 className="mb-3 text-lg font-light text-neutral-900">
           {problemTitle}
         </h4>
-        <p className="text-base leading-7 text-black">{problem}</p>
+        <p className="text-base leading-6 text-black">{problem}</p>
       </div>
     </div>
   );
@@ -78,7 +78,7 @@ export function Pair({ children }: { children: React.ReactNode }) {
  * dimensions.
  *
  * Padding is asymmetric on purpose: the content column's outer margin is
- * pulled in an extra 60px from the standard 40px edge margin (desktop and
+ * pulled in an extra 20px from the standard 40px edge margin (desktop and
  * up only — mobile keeps the standard margin on both sides), while the
  * image keeps the standard 40px edge margin regardless of which side it's
  * on.
@@ -86,6 +86,7 @@ export function Pair({ children }: { children: React.ReactNode }) {
 export function MediaSplit({
   eyebrow,
   title,
+  titleGapClassName = "mb-8",
   image,
   imageAlt,
   imageWidth,
@@ -95,6 +96,10 @@ export function MediaSplit({
 }: {
   eyebrow?: string;
   title?: string;
+  /** Override the gap between the title and the body content below it —
+   * used to bring one section's heading-to-body spacing in line with
+   * another's when they'd otherwise render slightly differently. */
+  titleGapClassName?: string;
   image: string;
   imageAlt: string;
   imageWidth: number;
@@ -103,7 +108,7 @@ export function MediaSplit({
   children: React.ReactNode;
 }) {
   const outerPadding =
-    side === "left" ? "sm:pl-10 sm:pr-[100px]" : "sm:pl-[100px] sm:pr-10";
+    side === "left" ? "sm:pl-10 sm:pr-[60px]" : "sm:pl-[60px] sm:pr-10";
 
   return (
     <div
@@ -114,7 +119,9 @@ export function MediaSplit({
       >
         {eyebrow && <p className="text-sm text-neutral-500">{eyebrow}</p>}
         {title && (
-          <h3 className="mt-2 mb-8 text-3xl tracking-tight text-neutral-800 sm:text-4xl">
+          <h3
+            className={`mt-2 text-3xl tracking-tight text-neutral-800 sm:text-4xl ${titleGapClassName}`}
+          >
             {title}
           </h3>
         )}
@@ -185,8 +192,8 @@ export function Quote({
   );
 }
 
-/** A single quote, unpadded — for use inside <QuotePair>. Width-capped so
- * lines wrap sooner instead of stretching across the whole column. */
+/** A single quote, unpadded — for use inside <QuotePair>. No width cap, so
+ * lines run the full column width like the rest of the body copy. */
 export function QuoteItem({
   text,
   attribution,
@@ -195,7 +202,7 @@ export function QuoteItem({
   attribution: string;
 }) {
   return (
-    <div className="max-w-sm">
+    <div>
       <p className="text-xl leading-snug text-neutral-800 sm:text-2xl">
         &ldquo;{text}&rdquo;
       </p>
@@ -207,12 +214,12 @@ export function QuoteItem({
 /**
  * Two client quotes side by side on a light-grey band. Left edge matches
  * the same pulled-in content margin used in <MediaSplit> (desktop/tablet
- * only); vertical padding is ~70% taller than a standard <SubSection> band
- * so the grey area has noticeably more presence.
+ * only); vertical padding gives generous breathing room without making
+ * the band overly tall.
  */
 export function QuotePair({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid grid-cols-1 gap-10 bg-neutral-100 px-6 py-16 sm:grid-cols-2 sm:gap-16 sm:py-[110px] sm:pl-[100px] sm:pr-10">
+    <div className="grid grid-cols-1 gap-10 bg-neutral-100 px-6 py-16 sm:grid-cols-2 sm:gap-16 sm:py-20 sm:pl-[60px] sm:pr-10">
       {children}
     </div>
   );
@@ -253,8 +260,8 @@ export function Detail({
 }) {
   return (
     <div>
-      <h4 className="mb-3 text-base font-light text-neutral-900">{title}</h4>
-      <div className="max-w-2xl space-y-3 text-base leading-7 text-black">
+      <h4 className="mb-3 text-lg font-light text-neutral-900">{title}</h4>
+      <div className="space-y-3 text-base leading-6 text-black">
         {children}
       </div>
     </div>
