@@ -90,6 +90,14 @@ heroLabel: "Short internal description of the hero photo, used as alt-text fallb
   imageWidth/imageHeight MUST be the source file's real pixel dimensions
   — the image renders uncropped (no `fill` + `object-cover`), so getting
   these wrong stretches/squashes it.
+
+  DRAFTING AHEAD OF REAL IMAGES: image/imageWidth/imageHeight are all
+  optional together — omit them (keep imageAlt) and <MediaSplit> renders
+  a placeholder box instead, so a section's eyebrow/title/copy can be
+  built and reviewed before the real exports exist. See rutter.mdx,
+  trustage.mdx, hinge-health.mdx, and flyr-labs.mdx for real examples of
+  this — each was scaffolded with real, known section topics but
+  placeholder images while waiting on Taylor's content/exports.
 */}
 <MediaSplit eyebrow="SECTION EYEBROW (e.g. Direct to Consumer)" title="SECTION HEADLINE" image="/images/SLUG-section1.webp" imageAlt="Descriptive alt text — mockups shown" imageWidth={0} imageHeight={0} side="right">
 

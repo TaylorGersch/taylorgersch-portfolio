@@ -7,13 +7,68 @@ heroType: "gradient-typewriter"
 heroText: "AI-powered financial integrations."
 ---
 
+{/*
+  PREP NOTE (structural scaffold only, no invented copy):
+  This mirrors docs/case-study-template.mdx. The eyebrow/title values below
+  are the two step names that were already known from the earlier
+  Squarespace review — they're real, not guessed. Everything marked
+  TODO/ALL-CAPS still needs Taylor's real copy + image exports. Once real
+  images exist, add `image`, `imageWidth`, `imageHeight` to each
+  <MediaSplit> (real pixel dimensions via PIL) and the placeholder swaps
+  out automatically — no structural changes needed.
+*/}
+
 <div className="border-t border-neutral-200 px-6 py-14 sm:px-10">
   <ImageBlock label='Product screenshot — "Map your PayPal accounts to QuickBooks"' ratio="aspect-[16/10]" />
 </div>
 
-<Stub step="01" label="Transaction and bank account mapping" />
+<SubSection>
 
-<Stub
-  step="02"
-  label="Accounting sync (label was clipped off-screen on the live site — desktop viewport cuts this section off with no horizontal scroll; confirm the exact wording before publishing)"
+<MediaSplit eyebrow="Product Design" title="Transaction & Bank Account Mapping" imageAlt="Transaction and bank account mapping — screenshots pending" side="right">
+
+<TwoCol
+  overview="TODO — overview + role copy for this step."
+  problem="TODO — the problem this step addressed."
 />
+
+<Detail title="The solution">
+
+TODO — what shipped for transaction/bank account mapping.
+
+</Detail>
+
+</MediaSplit>
+
+</SubSection>
+
+<SubSection>
+
+{/*
+  This step's label was clipped off-screen on the live site — the desktop
+  viewport cut this section off with no horizontal scroll, so double check
+  the exact wording with Taylor before publishing rather than trusting
+  "Accounting Sync" as final.
+*/}
+<MediaSplit eyebrow="Product Design" title="Accounting Sync" imageAlt="Accounting sync — screenshots pending" side="left">
+
+<TwoCol
+  overview="TODO — overview + role copy for this step."
+  problem="TODO — the problem this step addressed."
+/>
+
+<Detail title="The solution">
+
+TODO — what shipped for accounting sync.
+
+</Detail>
+
+</MediaSplit>
+
+</SubSection>
+
+{/*
+  Optional, once Taylor has supplementary screenshots or client quotes for
+  Rutter — see docs/case-study-template.mdx for the <ImageCarousel> /
+  <QuotePair> markup pattern. Leave omitted until there's real content for
+  either.
+*/}

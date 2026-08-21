@@ -5,12 +5,73 @@ dates: "2021"
 intro: "FLYR Labs, an AI-powered Revenue Operating System for airlines, needed a website that effectively communicated their deep learning technology to enterprise clients. I led the website design and comprehensive design system development, defining content hierarchy, establishing visual direction, and creating scalable components to support the brand's growth."
 heroType: "photo"
 heroImage: "/images/flyr-labs.webp"
+heroLabel: "TODO — real hero photo pending; the current heroImage is a generic stock placeholder (airplane wing at sunset), not a FLYR Labs asset. Replace or remove heroImage once a real shot is available."
 ---
 
-<ImageBlock label="01 — Website redesign and custom illustrations" />
+{/*
+  PREP NOTE (structural scaffold only, no invented copy):
+  Mirrors docs/case-study-template.mdx. The eyebrow/title values below are
+  the real, already-known image labels from the earlier Squarespace
+  review — not guessed. TwoCol/Detail copy is still TODO. Once real
+  screenshots exist, add image/imageWidth/imageHeight to each
+  <MediaSplit> (real pixel dimensions via PIL) to replace the placeholder.
+*/}
 
-<ImageBlock label="02 — Dynamic component and custom iconography" />
+<SubSection>
 
-<ImageBlock label="03 — Custom illustrations communicating complex ideas" />
+<MediaSplit eyebrow="Website Design" title="Website Redesign & Custom Illustrations" imageAlt="Website redesign and custom illustrations — screenshot pending" side="right">
 
-<ImageBlock label="04 — Case study template" />
+<TwoCol
+  overview="TODO — overview + role copy for the website redesign."
+  problem="TODO — the problem the redesign addressed."
+/>
+
+<Detail title="The solution">
+
+TODO — what shipped for the website redesign and custom illustrations.
+
+</Detail>
+
+</MediaSplit>
+
+</SubSection>
+
+<SubSection>
+
+<MediaSplit eyebrow="Design System" title="Dynamic Components & Custom Iconography" imageAlt="Dynamic component and custom iconography — screenshot pending" side="left">
+
+<TwoCol
+  overview="TODO — overview + role copy for the component/iconography system."
+  problem="TODO — the problem the design system addressed."
+/>
+
+<Detail title="The solution">
+
+TODO — what shipped for the dynamic components and iconography.
+
+</Detail>
+
+</MediaSplit>
+
+</SubSection>
+
+{/*
+  The remaining two known items ("custom illustrations communicating
+  complex ideas" and "case study template") read as supplementary visuals
+  rather than their own sections — a natural fit for <ImageCarousel> once
+  real exports exist. This is commented out (not just placeholder `src`
+  values) because <Image> requires a real src — an empty string breaks
+  the build. Uncomment and fill in real paths once the screenshots land:
+
+  <ImageCarousel>
+
+  <CarouselSlide src="/images/flyr-labs-carousel-1.webp" alt="Custom illustrations communicating complex ideas" caption="Custom illustrations communicating complex ideas" />
+  <CarouselSlide src="/images/flyr-labs-carousel-2.webp" alt="Case study template page" caption="Case study template" />
+
+  </ImageCarousel>
+*/}
+
+{/*
+  Optional, once Taylor has client quotes for FLYR Labs — see
+  docs/case-study-template.mdx for the <QuotePair> markup pattern.
+*/}

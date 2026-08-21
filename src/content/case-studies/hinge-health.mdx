@@ -5,28 +5,82 @@ dates: "2022"
 intro: "Hinge Health, a digital physical therapy platform, sought to expand their service to Medicare members aged 65+. I led a 12-week engagement focused on UX research, product strategy, and north star vision design, collaborating with a UX researcher to identify older adults' unique needs and barriers. Our insights informed three strategic focus areas for a tailored product that would help members age safely at home."
 heroType: "photo"
 heroImage: "/images/hinge-health.webp"
+heroLabel: "TODO — real hero photo pending; the current heroImage is a generic stock placeholder (elderly couple on a bench), not a Hinge Health asset. Replace or remove heroImage once a real shot is available."
 ---
 
-<ImageBlock label="01 — User experience research to understand senior behaviors" />
+{/*
+  PREP NOTE (structural scaffold only, no invented copy):
+  Mirrors docs/case-study-template.mdx. The eyebrow/title values and the
+  two closing quotes below are real, already-known content from the
+  earlier Squarespace review — not guessed. TwoCol/Detail copy is still
+  TODO. Grouping of the original 7 image labels into two MediaSplit
+  sections + one supplementary carousel is my best structural guess at
+  the natural narrative arc (research → north star design → community
+  features); re-order freely once the real screenshots make the actual
+  flow obvious. Once real screenshots exist, add image/imageWidth/
+  imageHeight to each <MediaSplit> (real pixel dimensions via PIL) to
+  replace the placeholder.
+*/}
 
-<ImageBlock label="02 — Analysis of Hinge Health's primary competitors" />
+<SubSection>
 
-<ImageBlock label="03 — Competitor deep dive to better understand what product opportunities to capitalize on" />
+<MediaSplit eyebrow="UX Research" title="Understanding Senior Behaviors & the Competitive Landscape" imageAlt="User experience research to understand senior behaviors — screenshot pending" side="right">
 
-<ImageBlock label="04 — Identified product opportunities based on product/design, growth/marketing, and content/messaging" />
-
-<ImageBlock label="05 — Northstar onboarding designs for the Medicare Advantage product" />
-
-<ImageBlock label="06 — Resources, community, and physical therapy videos to participate in" />
-
-<ImageBlock label="07 — Product improvements via community-based functionality and accessibility functions ahead of PT videos" />
-
-<Quote
-  text="Working with Taylor was so easy. We were able to partner up and work together seamlessly during her time with Hinge Health."
-  attribution="UX Researcher, Hinge Health"
+<TwoCol
+  overview="TODO — overview + role copy for the research phase."
+  problem="TODO — the problem the research addressed."
 />
 
-<Quote
-  text="Taylor's design work gave us the confidence to make significant product investments, knowing they were grounded in real member needs."
-  attribution="Project Lead, Hinge Health"
+<Detail title="The process">
+
+TODO — research approach. Known research/competitive-analysis beats to fold in: analysis of Hinge Health's primary competitors; a competitor deep dive to understand product opportunities; the resulting identified product opportunities (product/design, growth/marketing, content/messaging).
+
+</Detail>
+
+</MediaSplit>
+
+</SubSection>
+
+<SubSection>
+
+<MediaSplit eyebrow="North Star Design" title="Medicare Advantage Onboarding" imageAlt="Northstar onboarding designs for the Medicare Advantage product — screenshot pending" side="left">
+
+<TwoCol
+  overview="TODO — overview + role copy for the north star design."
+  problem="TODO — the problem the north star vision addressed."
 />
+
+<Detail title="The solution">
+
+TODO — what shipped for the Medicare Advantage north star onboarding.
+
+</Detail>
+
+</MediaSplit>
+
+</SubSection>
+
+{/*
+  The remaining two known items ("resources, community, and physical
+  therapy videos" and "product improvements via community-based
+  functionality and accessibility ahead of PT videos") read as
+  supplementary product visuals — a natural fit for <ImageCarousel> once
+  real exports exist. Commented out (not placeholder `src` values)
+  because <Image> requires a real src — an empty string breaks the
+  build. Uncomment and fill in real paths once the screenshots land:
+
+  <ImageCarousel>
+
+  <CarouselSlide src="/images/hinge-health-carousel-1.webp" alt="Resources, community, and physical therapy videos" caption="Resources, community, and physical therapy videos to participate in" />
+  <CarouselSlide src="/images/hinge-health-carousel-2.webp" alt="Community-based functionality and accessibility features ahead of PT videos" caption="Product improvements via community-based functionality and accessibility" />
+
+  </ImageCarousel>
+*/}
+
+<QuotePair>
+
+<QuoteItem text="Working with Taylor was so easy. We were able to partner up and work together seamlessly during her time with Hinge Health." attribution="UX Researcher, Hinge Health" />
+
+<QuoteItem text="Taylor's design work gave us the confidence to make significant product investments, knowing they were grounded in real member needs." attribution="Project Lead, Hinge Health" />
+
+</QuotePair>

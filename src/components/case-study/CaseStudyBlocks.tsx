@@ -77,6 +77,14 @@ export function Pair({ children }: { children: React.ReactNode }) {
  * `imageWidth`/`imageHeight` must match the source file's real pixel
  * dimensions.
  *
+ * `image`/`imageWidth`/`imageHeight` are all optional together — when a
+ * section's copy is ready before its real exports are, omit them and the
+ * image column renders a `<PlaceholderImage>` (labeled with `imageAlt`,
+ * sized by `placeholderRatio`) instead. This lets the whole section —
+ * eyebrow, title, overview/problem, process/solution — get built and
+ * reviewed before any screenshots exist; swap in the three image props
+ * later with no layout changes needed.
+ *
  * Padding is asymmetric on purpose: the content column's outer margin is
  * pulled in an extra 20px from the standard 40px edge margin (desktop and
  * up only — mobile keeps the standard margin on both sides), while the
@@ -91,6 +99,7 @@ export function MediaSplit({
   imageAlt,
   imageWidth,
   imageHeight,
+  placeholderRatio = "aspect-[4/3]",
   side = "right",
   children,
 }: {
@@ -100,10 +109,16 @@ export function MediaSplit({
    * used to bring one section's heading-to-body spacing in line with
    * another's when they'd otherwise render slightly differently. */
   titleGapClassName?: string;
-  image: string;
+  /** Real image path — omit (along with imageWidth/imageHeight) to render
+   * a placeholder instead while the section's copy/structure is drafted
+   * ahead of real exports. */
+  image?: string;
   imageAlt: string;
-  imageWidth: number;
-  imageHeight: number;
+  imageWidth?: number;
+  imageHeight?: number;
+  /** Aspect-ratio class for the placeholder shown when `image` is
+   * omitted — ignored once a real image is provided. */
+  placeholderRatio?: string;
   side?: "left" | "right";
   children: React.ReactNode;
 }) {
@@ -132,14 +147,21 @@ export function MediaSplit({
       <div
         className={`relative w-full ${side === "left" ? "sm:order-1" : "sm:order-2"}`}
       >
-        <Image
-          src={image}
-          alt={imageAlt}
-          width={imageWidth}
-          height={imageHeight}
-          sizes="(min-width: 640px) 50vw, 100vw"
-          className="h-auto w-full"
-        />
+        {image && imageWidth && imageHeight ? (
+          <Image
+            src={image}
+            alt={imageAlt}
+            width={imageWidth}
+            height={imageHeight}
+            sizes="(min-width: 640px) 50vw, 100vw"
+            className="h-auto w-full"
+          />
+        ) : (
+          <PlaceholderImage
+            label={imageAlt}
+            className={`w-full ${placeholderRatio}`}
+          />
+        )}
       </div>
     </div>
   );
