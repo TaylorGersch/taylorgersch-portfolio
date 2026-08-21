@@ -17,12 +17,13 @@ Open http://localhost:3000.
 ## What's here
 
 - `src/app/page.tsx` — homepage: Hero, LogoCarousel, ProjectsCarousel, ExploreSection, AboutSection
-- `src/app/[slug]/page.tsx` — case study template, reads from `src/content/case-studies/*.mdx`
-- `src/content/case-studies/` — one MDX file per project (`betterup.mdx`, `rutter.mdx`, `airbnb.mdx`). Frontmatter controls the title, category, dates, intro paragraph, and hero style; the MDX body is the page content, built from small components (`TwoCol`, `SubSection`, `ImageBlock`, `Stub`) defined in `src/components/case-study/CaseStudyBlocks.tsx`.
+- `src/app/(site)/[slug]/page.tsx` — case study route, reads from `src/content/case-studies/*.mdx`
+- `src/content/case-studies/` — one MDX file per project. Frontmatter controls the title, category, dates, intro paragraph, and hero style; the MDX body is the page content, built from components in `src/components/case-study/CaseStudyBlocks.tsx` (`MediaSplit`, `Pair`, `TwoCol`, `Detail`, `SubSection`, `Quote`, `QuoteItem`/`QuotePair`) plus `src/components/case-study/ImageCarousel.tsx` (`ImageCarousel`/`CarouselSlide`).
+- **`docs/case-study-template.mdx`** — the finalized BetterUp layout (fully QA'd) as a copy-paste starting skeleton for every other case study, with inline comments explaining each component, the asymmetric left-margin system, and a PNG→WebP transparency gotcha to avoid. Copy it into `src/content/case-studies/<slug>.mdx` and fill in the placeholders — it deliberately lives outside `src/content/case-studies/` so it's never picked up as a real route.
 - `src/components/` — homepage sections + shared Header/Footer
 - `public/logos/` — your client logos, copied over as-is from the Portfolio project folder
 
-Adding a fourth case study is just: drop a new `.mdx` file in `src/content/case-studies/`, add a card to the `PROJECTS` array in `src/components/ProjectsCarousel.tsx`, done — the `[slug]` route and static generation pick it up automatically.
+Adding another case study: copy `docs/case-study-template.mdx` into `src/content/case-studies/<slug>.mdx`, fill it in, add a card to the `PROJECTS` array in `src/components/ProjectsCarousel.tsx` — the `[slug]` route and static generation pick it up automatically.
 
 ## Replace the placeholder images
 

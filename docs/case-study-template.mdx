@@ -1,0 +1,193 @@
+{/*
+  CASE STUDY TEMPLATE — copy this file, don't edit it in place.
+
+  This captures the exact pattern used for the BetterUp case study
+  (src/content/case-studies/betterup.mdx), finalized after several rounds
+  of visual QA. Use it as the starting skeleton for every other case study
+  (Airbnb, Rutter, Flyr Labs, Hinge Health, TruStage) so they all read as
+  one consistent system.
+
+  HOW TO USE THIS FILE
+  1. Copy it into src/content/case-studies/<slug>.mdx (this file itself
+     lives in docs/, NOT in src/content/case-studies/, specifically so it
+     is never picked up as a real route — getAllCaseStudySlugs() in
+     src/lib/case-studies.ts only scans that one folder).
+  2. Fill in the frontmatter and every placeholder in ALL CAPS below.
+  3. Get each image's real pixel width/height (e.g. via PIL:
+     `Image.open(f).size`) and use the exact numbers for imageWidth /
+     imageHeight on <MediaSplit> — it renders uncropped at that ratio, so
+     wrong numbers will visibly stretch or squash the image.
+  4. Delete any section you don't need (not every case study needs 2
+     MediaSplit sections, a carousel, AND a quote pair) — this is a
+     skeleton, not a required checklist.
+  5. Run `npm run build` and `npm run lint`, then screenshot the page
+     (see "Verifying changes" below) before calling it done.
+
+  THE MARGIN SYSTEM (the thing most likely to look "off" if skipped)
+  Every text element on the page — the big title, the category/dates row,
+  each section's eyebrow/headline, and the quote band — uses an
+  asymmetric left inset on desktop/tablet only (mobile stays at the
+  standard px-6 on both sides):
+    - Text's outer margin:  sm:pl-[60px]  (60px instead of the standard 40)
+    - Image's outer margin: sm:pl-10 / sm:pr-10  (standard 40px, unchanged)
+  <MediaSplit> handles this automatically via its `side` prop — it flips
+  which edge gets the 60px vs the 40px depending on which side the image
+  is on. The page title (in src/app/(site)/[slug]/page.tsx) and <Meta>
+  hard-code sm:pl-[60px] directly since they don't have an image
+  counterpart. If you add any new full-width text block outside
+  <MediaSplit>, give it sm:pl-[60px] sm:pr-10 (mobile: px-6) to match.
+
+  IMAGE PNG→WEBP CONVERSION GOTCHA (bit us once already)
+  If you convert a PNG to WebP with a transparent background, do NOT call
+  `.convert('RGB')` in PIL before saving — that silently drops the alpha
+  channel and transparent pixels render solid BLACK instead of see-through.
+  Keep the image in RGBA mode and save straight to WEBP; PIL preserves
+  transparency natively. Only flatten to RGB for images you've confirmed
+  have no transparency (fully opaque photos/screenshots).
+
+  VERIFYING CHANGES
+  Real pipeline used throughout this project: `npm run build` + `npm run
+  lint`, then start the server (`npm run start`) and screenshot with
+  Playwright using the lock-screen cookie
+  (tg_site_access=tg-portfolio-2026-granted) — scroll through the page in
+  ~800px increments before capturing, since next/image lazy-loads and a
+  single full-page screenshot can miss below-the-fold images.
+*/}
+
+---
+title: "CASE STUDY TITLE"
+category: "TAG ONE, TAG TWO, TAG THREE"
+dates: "YYYY – YYYY"
+intro: "One paragraph: the company, what kind of product work this was, your role, and the top-line outcome. This renders in the <Meta> row under the big title."
+heroType: "photo"
+heroImage: "/images/SLUG-hero.webp"
+heroLabel: "Short internal description of the hero photo, used as alt-text fallback"
+---
+
+{/*
+  HERO CROP NOTE: CaseStudyHero.tsx currently hard-codes
+  `style={{ objectPosition: "center 30%" }}` on the hero photo — that was
+  tuned specifically for BetterUp's portrait so the subject's face reads
+  well in the wide/short hero band. If a new hero photo crops badly,
+  adjust that same style value (or make it a per-case-study frontmatter
+  field if this keeps needing per-photo tuning) rather than guessing
+  blind — screenshot and check.
+*/}
+
+<SubSection>
+
+{/*
+  <MediaSplit> owns BOTH the eyebrow/headline AND the image for this
+  section — they share one grid row on purpose so the image's top edge
+  lines up with the headline. Don't put eyebrow/title on <SubSection>
+  itself for a MediaSplit section; <SubSection> is just a border-top +
+  vertical-padding wrapper here.
+
+  side="right" puts the image on the right (text pulled-in-margin on the
+  left); side="left" flips it. Alternate sides between sections for
+  visual rhythm, matching the live Squarespace reference.
+
+  imageWidth/imageHeight MUST be the source file's real pixel dimensions
+  — the image renders uncropped (no `fill` + `object-cover`), so getting
+  these wrong stretches/squashes it.
+*/}
+<MediaSplit eyebrow="SECTION EYEBROW (e.g. Direct to Consumer)" title="SECTION HEADLINE" image="/images/SLUG-section1.webp" imageAlt="Descriptive alt text — mockups shown" imageWidth={0} imageHeight={0} side="right">
+
+<TwoCol
+  overview="Overview + Role copy: what this project was, your role, who else was involved, timeline."
+  problem="The problem copy: what was broken/missing, backed by whatever data or feedback surfaced it."
+/>
+
+<Pair>
+
+<Detail title="The process">
+
+How you approached it — research, prior art you looked at, how that shaped your thinking.
+
+</Detail>
+
+<Detail title="The solution">
+
+What you shipped. Can be a few short paragraphs (plain text, no bullets — matches the live site's rendering, not a bulleted list).
+
+</Detail>
+
+</Pair>
+
+{/* Outcome sits INSIDE MediaSplit, right after <Pair>, wrapped in this
+    divider div — NOT as a separate block after </MediaSplit>. This is
+    what keeps the divider directly under the body copy instead of
+    floating below the full image height. Omit this whole block if the
+    live site genuinely has no outcome for this section (that's fine —
+    section 2 in BetterUp has one, but not every section needs one). */}
+<div className="border-t border-neutral-200 pt-8">
+
+<Detail title="The outcome">
+
+The result, ideally with a real number if you have one. If there's no hard metric, qualitative signal (adoption, feedback, buy-in) is fine — say so plainly rather than inventing a stat.
+
+</Detail>
+
+</div>
+
+</MediaSplit>
+
+</SubSection>
+
+<SubSection>
+
+{/*
+  titleGapClassName is an escape hatch for when two sections' headline-
+  to-body spacing visually don't match by default (happened once between
+  BetterUp's two sections) — only add it if a screenshot comparison shows
+  a real mismatch. Default is fine most of the time; leave the prop off
+  unless you've confirmed you need it.
+*/}
+<MediaSplit eyebrow="SECTION 2 EYEBROW" title="SECTION 2 HEADLINE" image="/images/SLUG-section2.webp" imageAlt="Descriptive alt text" imageWidth={0} imageHeight={0} side="left">
+
+<TwoCol
+  overview="..."
+  problem="..."
+/>
+
+{/* Single <Detail> (no <Pair>) when there's no separate "process" to
+    call out — BetterUp's section 2 does this for "The solution". */}
+<Detail title="The solution">
+
+...
+
+</Detail>
+
+</MediaSplit>
+
+</SubSection>
+
+{/*
+  IMAGE CAROUSEL — optional. Only include if you have a set of
+  supplementary screenshots that don't belong to either MediaSplit
+  section above. Each <CarouselSlide> is a single-line marker tag (don't
+  reformat onto multiple lines — multi-line JSX attributes silently
+  break in this MDX pipeline). Captions should stay one line; longer
+  captions get truncated with an ellipsis by design.
+*/}
+<ImageCarousel>
+
+<CarouselSlide src="/images/SLUG-carousel-1.webp" alt="Alt text" caption="Short one-line caption" />
+<CarouselSlide src="/images/SLUG-carousel-2.webp" alt="Alt text" caption="Short one-line caption" />
+<CarouselSlide src="/images/SLUG-carousel-3.webp" alt="Alt text" caption="Short one-line caption" />
+
+</ImageCarousel>
+
+{/*
+  QUOTE PAIR — optional. Two client quotes side by side on a grey band.
+  If you only have one quote, use the standalone <Quote text="..."
+  attribution="..." /> instead (no pairing, full-width, different
+  component — see CaseStudyBlocks.tsx).
+*/}
+<QuotePair>
+
+<QuoteItem text="Verbatim quote text." attribution="Their title, Company" />
+
+<QuoteItem text="Verbatim quote text." attribution="Their title, Company" />
+
+</QuotePair>
