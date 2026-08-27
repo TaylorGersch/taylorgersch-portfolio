@@ -39,14 +39,9 @@ To swap one in:
 
 The fastest way to get your original photos: open each page on the live site, right-click each image → "Save Image As," or grab them straight from your Squarespace media library (Settings → Assets in the Squarespace dashboard hosts them at full resolution).
 
-## Two content gaps carried over from the live site
+## Current build status
 
-The review of taylorgersch.com found two case studies with sections that were empty on the live site — I preserved that as a clearly flagged TODO rather than inventing content:
-
-- **Rutter** (`src/content/case-studies/rutter.mdx`) — steps "01" and "02" after the PayPal→QuickBooks screenshot had no supporting copy or images on the live site (and "02"'s label was literally cut off the right edge of the page with no way to scroll to it).
-- **Airbnb** (`src/content/case-studies/airbnb.mdx`) — a carousel section with prev/next arrows over completely blank space.
-
-Look for the amber `<Stub>` blocks on those two pages and replace them with real content (or delete the block if the step isn't needed).
+The old `<Stub>` placeholders that used to mark empty sections on Rutter and Airbnb are gone — both case studies now have real, written content in place of them. `CLAUDE.md` in the repo root (auto-loaded by Claude Code) tracks the actual up-to-date status of every case study, what's finished, and what's still waiting on content from Taylor, so it's the source of truth rather than this file — check there before assuming anything below is current.
 
 ## Deploy: GitHub + Vercel
 
