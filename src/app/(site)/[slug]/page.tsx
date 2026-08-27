@@ -23,6 +23,10 @@ import {
 import ImageCarousel, {
   CarouselSlide,
 } from "@/components/case-study/ImageCarousel";
+import {
+  ProductWalkthrough,
+  WalkthroughRegion,
+} from "@/components/case-study/ProductWalkthrough";
 
 export function generateStaticParams() {
   return getAllCaseStudySlugs().map((slug) => ({ slug }));
@@ -57,6 +61,8 @@ export default async function CaseStudyPage({
       Detail,
       ImageCarousel,
       CarouselSlide,
+      ProductWalkthrough,
+      WalkthroughRegion,
     },
     options: { parseFrontmatter: false },
   });
