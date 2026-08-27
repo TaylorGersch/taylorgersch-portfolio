@@ -1,7 +1,16 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
+
+/** Upper-bound pixel heights of the modal's scroll frame — kept as
+ * constants (rather than inline in the className/style strings below) so
+ * the horizontal `sizes` calculation can reason about the real rendered
+ * width a horizontal artifact will hit at its tallest, since its CSS
+ * width is height-driven (`h-full w-auto`) rather than width-driven. */
+const MODAL_HORIZONTAL_FRAME_HEIGHT_PX = 720;
+const MODAL_VERTICAL_FRAME_HEIGHT_PX = 800;
 
 /** Shared prev/next chevron — same icon as <ImageCarousel>, just able to
  * point in all four directions for vertical vs. horizontal controls. */
@@ -27,6 +36,34 @@ function ArrowIcon({ dir }: { dir: "left" | "right" | "up" | "down" }) {
   );
 }
 
+/** Corner "expand to full width" affordance on the inline frame. */
+function ExpandIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden>
+      <path
+        d="M7.5 2.5H2.5V7.5M12.5 2.5H17.5V7.5M17.5 12.5V17.5H12.5M2.5 12.5V17.5H7.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+      <path
+        d="M5 5L15 15M15 5L5 15"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 /**
  * A single scrollable window onto an oversized artifact — used for both
  * the horizontal journey map and the vertical notification-framework doc
@@ -43,6 +80,12 @@ function ArrowIcon({ dir }: { dir: "left" | "right" | "up" | "down" }) {
  * content beyond the crop — without them a fixed-size window with no
  * visible scrollbar can read as the whole image rather than a view onto
  * a much bigger one.
+ *
+ * `expandable` (default true) adds a corner button that opens the same
+ * scrollable view full-width in a modal — same drag/scroll/paging
+ * behavior, just a much larger frame so the source detail actually reads.
+ * The modal renders a second <ScrollVisual> with `expandable={false}` so
+ * it can't recurse into its own expand button.
  */
 export function ScrollVisual({
   orientation,
@@ -52,6 +95,7 @@ export function ScrollVisual({
   imageHeight,
   label,
   frameHeight,
+  expandable = true,
 }: {
   orientation: "horizontal" | "vertical";
   image: string;
@@ -65,15 +109,39 @@ export function ScrollVisual({
    * own eyebrow/title. */
   label?: string;
   frameHeight?: string;
+  /** Set false on the instance rendered inside the modal itself, so it
+   * doesn't grow its own expand button. */
+  expandable?: boolean;
 }) {
   const scrollerRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef({ dragging: false, startX: 0, startScrollLeft: 0 });
+  const expandButtonRef = useRef<HTMLButtonElement>(null);
+  const [expanded, setExpanded] = useState(false);
   const widthNum = Number(imageWidth);
   const heightNum = Number(imageHeight);
   const isHorizontal = orientation === "horizontal";
   const resolvedFrameHeight =
     frameHeight ??
     (isHorizontal ? "clamp(220px, 24vw, 340px)" : "clamp(360px, 42vw, 480px)");
+
+  // Escape-to-close + body-scroll-lock while the modal is open; focus
+  // returns to the button that opened it on close, so keyboard users
+  // don't lose their place.
+  useEffect(() => {
+    if (!expanded) return;
+    const triggerEl = expandButtonRef.current;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setExpanded(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      triggerEl?.focus();
+    };
+  }, [expanded]);
 
   const page = (dir: 1 | -1) => {
     const el = scrollerRef.current;
@@ -109,11 +177,32 @@ export function ScrollVisual({
     if (el?.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId);
   };
 
-  return (
+  // Widest the image will ever actually render at in each mode, so the
+  // `sizes` hint we give next/image never undersells what's on screen.
+  // Horizontal frames render the artifact at its full natural aspect
+  // ratio scaled to the frame's HEIGHT (`h-full w-auto`), so its CSS
+  // width can be much larger than the viewport — a viewport-relative
+  // hint like "100vw" badly undersells that on a narrow/tall modal
+  // (e.g. a wide journey map at a fixed 720px-tall modal frame renders
+  // far wider than a phone's 100vw), which is exactly what was causing
+  // the modal image to look soft on mobile. Compute the true worst-case
+  // CSS width instead: frame-height cap × the image's own aspect ratio.
+  // Vertical frames are width-constrained (`w-full`), so the modal's
+  // actual container max-width is already a precise, sufficient hint.
+  const modalHorizontalWidthPx = Math.ceil(
+    MODAL_HORIZONTAL_FRAME_HEIGHT_PX * (widthNum / heightNum),
+  );
+  const sizes = isHorizontal
+    ? expandable
+      ? "(min-width: 640px) 1300px, 100vw"
+      : `${modalHorizontalWidthPx}px`
+    : expandable
+      ? "(min-width: 640px) 50vw, 100vw"
+      : "min(94vw, 1500px)";
+
+  const frame = (
     <div>
-      {label && (
-        <p className="mb-2 text-sm text-neutral-600">{label}</p>
-      )}
+      {label && <p className="mb-2 text-sm text-neutral-600">{label}</p>}
       <div
         className={`relative overflow-hidden rounded-md bg-neutral-100 ${isHorizontal ? "" : "border border-neutral-200"}`}
         style={{ height: resolvedFrameHeight }}
@@ -144,11 +233,7 @@ export function ScrollVisual({
             height={heightNum}
             draggable={false}
             className={isHorizontal ? "h-full w-auto max-w-none" : "h-auto w-full"}
-            sizes={
-              isHorizontal
-                ? "(min-width: 640px) 1300px, 100vw"
-                : "(min-width: 640px) 50vw, 100vw"
-            }
+            sizes={sizes}
           />
         </div>
         <div
@@ -159,6 +244,19 @@ export function ScrollVisual({
               : "pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-neutral-100 to-transparent"
           }
         />
+        {expandable && (
+          <button
+            type="button"
+            ref={expandButtonRef}
+            onClick={() => setExpanded(true)}
+            aria-label={
+              label ? `Expand ${label} to full width` : "Expand image to full width"
+            }
+            className="absolute top-3 right-3 z-10 rounded-full bg-white/90 p-2 text-neutral-600 shadow-sm backdrop-blur-sm transition-colors hover:bg-white hover:text-neutral-900"
+          >
+            <ExpandIcon />
+          </button>
+        )}
       </div>
 
       <div className="mt-3 flex items-center justify-between">
@@ -183,6 +281,52 @@ export function ScrollVisual({
         </div>
       </div>
     </div>
+  );
+
+  return (
+    <>
+      {frame}
+      {expandable &&
+        expanded &&
+        createPortal(
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label={label ? `${label} — full-width view` : "Full-width view"}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-neutral-900/85 p-4 sm:p-10"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) setExpanded(false);
+            }}
+          >
+            <div className="relative w-full max-w-[min(94vw,1500px)]">
+              <button
+                type="button"
+                onClick={() => setExpanded(false)}
+                aria-label="Close expanded view"
+                className="absolute -top-11 right-0 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20"
+              >
+                <CloseIcon />
+              </button>
+              <div className="rounded-md bg-white p-2 shadow-2xl sm:p-3">
+                <ScrollVisual
+                  orientation={orientation}
+                  image={image}
+                  imageAlt={imageAlt}
+                  imageWidth={imageWidth}
+                  imageHeight={imageHeight}
+                  frameHeight={
+                    isHorizontal
+                      ? `min(78vh, ${MODAL_HORIZONTAL_FRAME_HEIGHT_PX}px)`
+                      : `min(82vh, ${MODAL_VERTICAL_FRAME_HEIGHT_PX}px)`
+                  }
+                  expandable={false}
+                />
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )}
+    </>
   );
 }
 
