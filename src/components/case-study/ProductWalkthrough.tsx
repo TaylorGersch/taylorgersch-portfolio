@@ -57,22 +57,27 @@ export function WalkthroughRegion(_props: RegionProps) {
 }
 
 /**
- * "Explain the tool before the feature work" section — a full-width
- * eyebrow/title/subcopy block followed by a single annotated screenshot.
+ * "Explain the tool before the feature work" section — a 50/50 split
+ * matching <MediaSplit>'s grid/margin system: eyebrow/title/subcopy on
+ * one side, a single annotated screenshot on the other. Unlike
+ * <MediaSplit>, the "image" side here also carries a labeled tab row
+ * above the screenshot, since the whole point of this section is
+ * teaching the anatomy of the tool rather than pairing copy with a
+ * static image.
+ *
  * Rather than a real GIF (next/image can't animate one anyway — it
  * flattens GIFs to a static frame during optimization, and a real
  * animated GIF at this resolution would be a multi-MB asset), the
- * highlight itself is a live, coded overlay: a labeled tab row above the
- * image drives which region gets a spotlight treatment below, cross-
+ * highlight itself is a live, coded overlay: the tab row drives which
+ * region gets a spotlight treatment on the screenshot below, cross-
  * fading on an auto-advance timer. Cheaper to load, crisp at any zoom
  * level, and trivial to re-word or re-time later without touching image
  * assets.
  *
- * Not paired with a side-by-side image (contrast with <MediaSplit>) — the
- * text block spans full width using the same pulled-in text margin
- * (`sm:pl-[60px]`) as everything else, and the screenshot below it uses
- * the standard image margin (`sm:pl-10 sm:pr-10`), same margin system
- * documented on <MediaSplit>.
+ * Text column is intentionally NOT vertically centered (contrast with
+ * <MediaSplit>'s body content, which centers in the leftover space below
+ * its heading) — eyebrow/title/subcopy just stack from the top of the
+ * grid row, top-aligned with the image beside them.
  */
 export function ProductWalkthrough({
   eyebrow,
@@ -83,13 +88,14 @@ export function ProductWalkthrough({
   imageWidth,
   imageHeight,
   intervalMs = 3200,
+  side = "right",
   children,
 }: {
   eyebrow?: string;
   title?: string;
   subcopy?: string;
   /** Real image path — omit (along with imageWidth/imageHeight) to render
-   * a placeholder instead while copy is drafted ahead of a real export. */
+   * nothing on that side while copy is drafted ahead of a real export. */
   image?: string;
   imageAlt: string;
   /** Pass as a quoted string, e.g. `imageWidth="2900"` — see the MDX
@@ -98,6 +104,10 @@ export function ProductWalkthrough({
   imageHeight?: number | string;
   /** Milliseconds each region stays highlighted before auto-advancing. */
   intervalMs?: number;
+  /** Which side the image/tab column sits on — same convention as
+   * <MediaSplit>'s `side` prop, flipping which edge gets the pulled-in
+   * 60px text margin vs. the standard 40px image margin. */
+  side?: "left" | "right";
   children: React.ReactNode;
 }) {
   const regions = Children.toArray(children)
@@ -123,31 +133,31 @@ export function ProductWalkthrough({
   const widthNum = imageWidth ? Number(imageWidth) : undefined;
   const heightNum = imageHeight ? Number(imageHeight) : undefined;
   const hasImage = Boolean(image && widthNum && heightNum && regions.length > 0);
+  const outerPadding =
+    side === "left" ? "sm:pl-10 sm:pr-[60px]" : "sm:pl-[60px] sm:pr-10";
 
   return (
-    <div>
-      {(eyebrow || title || subcopy) && (
-        <div className="px-6 pb-10 sm:pr-10 sm:pl-[60px]">
-          {eyebrow && <p className="text-sm text-neutral-500">{eyebrow}</p>}
-          {title && (
-            <h3 className="mt-2 mb-4 text-3xl tracking-tight text-neutral-800 sm:text-4xl">
-              {title}
-            </h3>
-          )}
-          {subcopy && (
-            <p className="max-w-3xl text-base leading-6 text-black">
-              {subcopy}
-            </p>
-          )}
-        </div>
-      )}
+    <div
+      className={`grid grid-cols-1 gap-10 px-6 py-10 sm:grid-cols-2 sm:gap-12 sm:py-14 ${outerPadding}`}
+    >
+      <div className={side === "left" ? "sm:order-2" : "sm:order-1"}>
+        {eyebrow && <p className="text-sm text-neutral-500">{eyebrow}</p>}
+        {title && (
+          <h3 className="mt-2 mb-4 text-3xl tracking-tight text-neutral-800 sm:text-4xl">
+            {title}
+          </h3>
+        )}
+        {subcopy && (
+          <p className="text-base leading-6 text-black">{subcopy}</p>
+        )}
+      </div>
 
       {hasImage && (
-        <div className="px-6 sm:pr-10 sm:pl-10">
+        <div className={side === "left" ? "sm:order-1" : "sm:order-2"}>
           <div
             role="tablist"
             aria-label={title ? `${title} — highlighted areas` : "Highlighted areas"}
-            className="mb-4 flex flex-wrap gap-x-6 gap-y-2"
+            className="mb-4 flex flex-wrap gap-x-4 gap-y-2"
           >
             {regions.map((r, i) => (
               <button
@@ -176,7 +186,7 @@ export function ProductWalkthrough({
               alt={imageAlt}
               width={widthNum}
               height={heightNum}
-              sizes="100vw"
+              sizes="(min-width: 640px) 50vw, 100vw"
               className="h-auto w-full"
             />
             {regions.map((r, i) => (
