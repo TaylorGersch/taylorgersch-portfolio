@@ -16,7 +16,10 @@
   3. Get each image's real pixel width/height (e.g. via PIL:
      `Image.open(f).size`) and use the exact numbers for imageWidth /
      imageHeight on <MediaSplit> — it renders uncropped at that ratio, so
-     wrong numbers will visibly stretch or squash the image.
+     wrong numbers will visibly stretch or squash the image. Pass them as
+     QUOTED STRINGS (imageWidth="1500"), never as {1500} — see the MDX
+     NUMERIC-PROP GOTCHA note below, this one is easy to miss because it
+     fails completely silently.
   4. Delete any section you don't need (not every case study needs 2
      MediaSplit sections, a carousel, AND a quote pair) — this is a
      skeleton, not a required checklist.
@@ -44,6 +47,22 @@
   Keep the image in RGBA mode and save straight to WEBP; PIL preserves
   transparency natively. Only flatten to RGB for images you've confirmed
   have no transparency (fully opaque photos/screenshots).
+
+  MDX NUMERIC-PROP GOTCHA (bit us once already, silently — worse than the
+  ones above because there's no error, just a wrong-looking page)
+  The MDX pipeline here (next-mdx-remote@6 on this project's Next/React
+  versions) drops ANY `{...}` JSX expression-container attribute value —
+  not just multi-line array/object literals, but plain numeric literals
+  too. `imageWidth={1500}` compiles fine and arrives at <MediaSplit> as
+  `undefined`, which silently falls back to the placeholder box — so the
+  page LOOKS done (build succeeds, no console error) but is quietly
+  showing grey placeholder rectangles instead of your real images. This
+  actually happened to every existing MediaSplit image site-wide,
+  BetterUp included, before it was caught and fixed. Always write
+  imageWidth/imageHeight as quoted strings — `imageWidth="1500"
+  imageHeight="1553"` — never with curly braces. After wiring up any new
+  MediaSplit image, verify with a real screenshot (not just a successful
+  build) that the actual image is showing, not a grey box.
 
   VERIFYING CHANGES
   Real pipeline used throughout this project: `npm run build` + `npm run
@@ -99,7 +118,7 @@ heroLabel: "Short internal description of the hero photo, used as alt-text fallb
   this — each was scaffolded with real, known section topics but
   placeholder images while waiting on Taylor's content/exports.
 */}
-<MediaSplit eyebrow="SECTION EYEBROW (e.g. Direct to Consumer)" title="SECTION HEADLINE" image="/images/SLUG-section1.webp" imageAlt="Descriptive alt text — mockups shown" imageWidth={0} imageHeight={0} side="right">
+<MediaSplit eyebrow="SECTION EYEBROW (e.g. Direct to Consumer)" title="SECTION HEADLINE" image="/images/SLUG-section1.webp" imageAlt="Descriptive alt text — mockups shown" imageWidth="0" imageHeight="0" side="right">
 
 <TwoCol
   overview="Overview + Role copy: what this project was, your role, who else was involved, timeline."
@@ -151,7 +170,7 @@ The result, ideally with a real number if you have one. If there's no hard metri
   a real mismatch. Default is fine most of the time; leave the prop off
   unless you've confirmed you need it.
 */}
-<MediaSplit eyebrow="SECTION 2 EYEBROW" title="SECTION 2 HEADLINE" image="/images/SLUG-section2.webp" imageAlt="Descriptive alt text" imageWidth={0} imageHeight={0} side="left">
+<MediaSplit eyebrow="SECTION 2 EYEBROW" title="SECTION 2 HEADLINE" image="/images/SLUG-section2.webp" imageAlt="Descriptive alt text" imageWidth="0" imageHeight="0" side="left">
 
 <TwoCol
   overview="..."

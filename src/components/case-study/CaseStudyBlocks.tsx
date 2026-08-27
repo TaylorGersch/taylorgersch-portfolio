@@ -85,6 +85,18 @@ export function Pair({ children }: { children: React.ReactNode }) {
  * reviewed before any screenshots exist; swap in the three image props
  * later with no layout changes needed.
  *
+ * IMPORTANT — pass imageWidth/imageHeight as QUOTED STRINGS, not numeric
+ * JSX expressions: `imageWidth="1500"`, never `imageWidth={1500}`. The
+ * MDX pipeline in this project (next-mdx-remote@6 on the current
+ * Next/React versions) silently drops ANY `{...}` JSX expression-container
+ * attribute value — not just multi-line array/object literals as
+ * previously documented, but plain numeric literals too — so
+ * `imageWidth={1500}` arrives here as `undefined` with no build error,
+ * and the section silently falls back to the placeholder box. This broke
+ * every existing MediaSplit image site-wide (BetterUp included) until
+ * caught here. String attributes are unaffected, so MediaSplit accepts
+ * strings (or numbers) and coerces them itself.
+ *
  * Padding is asymmetric on purpose: the content column's outer margin is
  * pulled in an extra 20px from the standard 40px edge margin (desktop and
  * up only — mobile keeps the standard margin on both sides), while the
@@ -114,8 +126,11 @@ export function MediaSplit({
    * ahead of real exports. */
   image?: string;
   imageAlt: string;
-  imageWidth?: number;
-  imageHeight?: number;
+  /** Pass as a quoted string, e.g. `imageWidth="1500"` — see the
+   * IMPORTANT note above about why `{1500}` silently fails in this MDX
+   * pipeline. */
+  imageWidth?: number | string;
+  imageHeight?: number | string;
   /** Aspect-ratio class for the placeholder shown when `image` is
    * omitted — ignored once a real image is provided. */
   placeholderRatio?: string;
@@ -124,6 +139,8 @@ export function MediaSplit({
 }) {
   const outerPadding =
     side === "left" ? "sm:pl-10 sm:pr-[60px]" : "sm:pl-[60px] sm:pr-10";
+  const widthNum = imageWidth ? Number(imageWidth) : undefined;
+  const heightNum = imageHeight ? Number(imageHeight) : undefined;
 
   return (
     <div
@@ -147,12 +164,12 @@ export function MediaSplit({
       <div
         className={`relative w-full ${side === "left" ? "sm:order-1" : "sm:order-2"}`}
       >
-        {image && imageWidth && imageHeight ? (
+        {image && widthNum && heightNum ? (
           <Image
             src={image}
             alt={imageAlt}
-            width={imageWidth}
-            height={imageHeight}
+            width={widthNum}
+            height={heightNum}
             sizes="(min-width: 640px) 50vw, 100vw"
             className="h-auto w-full"
           />
