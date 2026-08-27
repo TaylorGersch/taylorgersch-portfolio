@@ -112,7 +112,7 @@ export function ScrollVisual({
   return (
     <div>
       {label && (
-        <p className="mb-2 text-sm font-medium text-neutral-600">{label}</p>
+        <p className="mb-2 text-sm text-neutral-600">{label}</p>
       )}
       <div
         className={`relative overflow-hidden rounded-md bg-neutral-100 ${isHorizontal ? "" : "border border-neutral-200"}`}
@@ -194,12 +194,11 @@ export function ScrollVisual({
  * one is "the" image for the section the way every other MediaSplit-based
  * section has exactly one.
  *
- * Unlike <MediaSplit> (eyebrow/title pinned to the top, body content
- * centered in the space below), the whole left column here — eyebrow,
- * title, and the Overview + Role / process / solution / outcome content
- * dropped in via `children` — is vertically centered as one block against
- * the taller right column via `self-center` on the grid item, same
- * technique as <ProductWalkthrough>'s text column.
+ * Left column top-aligns to the right column (default grid behavior, no
+ * `self-center`) — this section carries a full Overview + Role / process
+ * / solution / outcome writeup, so there's usually more text here than
+ * in the right column's two visuals, and top-aligning keeps it reading
+ * naturally from the top instead of floating mid-column.
  */
 export function NotificationFrameworkSplit({
   eyebrow,
@@ -238,7 +237,7 @@ export function NotificationFrameworkSplit({
       className={`grid grid-cols-1 gap-10 px-6 py-10 sm:grid-cols-2 sm:gap-12 sm:py-14 ${outerPadding}`}
     >
       <div
-        className={`self-center ${side === "left" ? "sm:order-2" : "sm:order-1"}`}
+        className={side === "left" ? "sm:order-2" : "sm:order-1"}
       >
         {eyebrow && <p className="text-sm text-neutral-500">{eyebrow}</p>}
         {title && (
