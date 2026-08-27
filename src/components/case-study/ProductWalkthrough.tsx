@@ -74,10 +74,12 @@ export function WalkthroughRegion(_props: RegionProps) {
  * level, and trivial to re-word or re-time later without touching image
  * assets.
  *
- * Text column is intentionally NOT vertically centered (contrast with
- * <MediaSplit>'s body content, which centers in the leftover space below
- * its heading) — eyebrow/title/subcopy just stack from the top of the
- * grid row, top-aligned with the image beside them.
+ * Text column is vertically centered against the image column via
+ * `self-center` on the grid item (not `justify-center` on an inner flex
+ * wrapper — the grid row already stretches to the taller sibling's
+ * height, so `self-center` alone centers the shorter text block within
+ * it). Sub-copy is capped at `max-w-md` with `text-pretty` so it wraps
+ * onto a balanced last line instead of leaving a lone orphan word.
  */
 export function ProductWalkthrough({
   eyebrow,
@@ -140,7 +142,9 @@ export function ProductWalkthrough({
     <div
       className={`grid grid-cols-1 gap-10 px-6 py-10 sm:grid-cols-2 sm:gap-12 sm:py-14 ${outerPadding}`}
     >
-      <div className={side === "left" ? "sm:order-2" : "sm:order-1"}>
+      <div
+        className={`self-center ${side === "left" ? "sm:order-2" : "sm:order-1"}`}
+      >
         {eyebrow && <p className="text-sm text-neutral-500">{eyebrow}</p>}
         {title && (
           <h3 className="mt-2 mb-4 text-3xl tracking-tight text-neutral-800 sm:text-4xl">
@@ -148,7 +152,9 @@ export function ProductWalkthrough({
           </h3>
         )}
         {subcopy && (
-          <p className="text-base leading-6 text-black">{subcopy}</p>
+          <p className="max-w-md text-pretty text-base leading-6 text-black">
+            {subcopy}
+          </p>
         )}
       </div>
 
