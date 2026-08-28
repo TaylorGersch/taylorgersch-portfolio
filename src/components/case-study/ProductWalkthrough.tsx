@@ -147,7 +147,7 @@ export function ProductWalkthrough({
       >
         {eyebrow && <p className="text-sm text-neutral-500">{eyebrow}</p>}
         {title && (
-          <h3 className="mt-2 mb-4 text-3xl tracking-tight text-neutral-800 sm:text-4xl">
+          <h3 className="mt-2 mb-8 text-3xl tracking-tight text-neutral-800 sm:text-4xl">
             {title}
           </h3>
         )}

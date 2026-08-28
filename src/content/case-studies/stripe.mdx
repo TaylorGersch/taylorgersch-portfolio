@@ -41,13 +41,15 @@ heroVideoPoster: "/images/stripe-gradient-poster.webp"
   Hero uses the looping gradient video (heroVideoWebm/Mp4/Poster) that
   also powers this case study's Explore-card thumbnail — see
   ExploreSection.tsx. The MediaSplit's image is now real — Taylor's
-  Fortuna UI export, resized to 2400x2559 and converted to webp at
-  public/images/stripe-fortuna-contract-tool.webp.
+  high-res Fortuna UI export, composited onto a white background (the
+  source PNG's transparent corners had black RGB underneath, which
+  showed through as black corners until fixed) and resized to 3200x3413,
+  saved as public/images/stripe-fortuna-contract-tool.webp.
 */}
 
 <SubSection>
 
-<MediaSplit eyebrow="Stripe Internal Tooling" title="Contract Customizations" image="/images/stripe-fortuna-contract-tool.webp" imageAlt="Fortuna, Stripe's internal contract customization tool, showing a contract's solutions, tiered pricing, and margin summary, alongside a warning tooltip interaction for a custom pricing solution" imageWidth="2400" imageHeight="2559" side="right">
+<MediaSplit eyebrow="Stripe Internal Tooling" title="Contract Customizations" image="/images/stripe-fortuna-contract-tool.webp" imageAlt="Fortuna, Stripe's internal contract customization tool, showing a contract's solutions, tiered pricing, and margin summary, alongside a warning tooltip interaction for a custom pricing solution" imageWidth="3200" imageHeight="3413" side="right">
 
 <TwoCol
   overview="Fortuna is the internal tool Stripe's go-to-market team uses to customize contracts with the businesses they partner with. Every contract can flex on currency, geography, timespan, and other negotiated terms, so the tool needed to be flexible enough to handle that complexity while still streamlining the day-to-day workflow for the people using it. I partnered with Stripe's product manager to define the product work, then collaborated directly with the tool's primary users to shape a workflow that actually worked better for them."
