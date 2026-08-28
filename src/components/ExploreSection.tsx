@@ -2,13 +2,29 @@ import Image from "next/image";
 import Link from "next/link";
 import PlaceholderImage from "./PlaceholderImage";
 
-const EXPLORE = [
+type ExploreItem = {
+  slug: string;
+  title: string;
+  description: string;
+  // Optional on purpose: PlaceholderImage renders in the meantime for any
+  // case study whose card thumbnail hasn't been exported yet.
+  image?: string;
+  // Looping video thumbnail, used instead of `image` when present (the
+  // Stripe gradient loop). webm first (much smaller), mp4 fallback.
+  videoWebm?: string;
+  videoMp4?: string;
+  videoPoster?: string;
+};
+
+const EXPLORE: ExploreItem[] = [
   {
-    slug: "trustage",
-    title: "TruStage",
+    slug: "stripe",
+    title: "Stripe",
     description:
-      "Complete website redesign and component system for insurance provider, informed by user research and cross-functional collaboration.",
-    image: "/images/trustage.webp",
+      "Partnered with Stripe to design a brand-new internal feature, interviewing primary users to uncover workflow needs and extending their design system into a flexible, customization-ready tool.",
+    videoWebm: "/videos/stripe-gradient.webm",
+    videoMp4: "/videos/stripe-gradient.mp4",
+    videoPoster: "/images/stripe-gradient-poster.webp",
   },
   {
     slug: "hinge-health",
@@ -16,6 +32,13 @@ const EXPLORE = [
     description:
       "Led research, strategy, and north star vision for Medicare product expansion, identifying older adults' unique needs to inform three strategic focus areas for aging safely at home.",
     image: "/images/hinge-health.webp",
+  },
+  {
+    slug: "trustage",
+    title: "TruStage",
+    description:
+      "Complete website redesign and component system for insurance provider, informed by user research and cross-functional collaboration.",
+    image: "/images/trustage.webp",
   },
   {
     slug: "flyr-labs",
@@ -56,7 +79,25 @@ export default function ExploreSection() {
             </div>
 
             <Link href={`/${item.slug}`} className="block">
-              {item.image ? (
+              {item.videoWebm || item.videoMp4 ? (
+                <div className="relative aspect-[16/10] w-full overflow-hidden">
+                  <video
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    poster={item.videoPoster}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 hover:scale-[1.03]"
+                  >
+                    {item.videoWebm && (
+                      <source src={item.videoWebm} type="video/webm" />
+                    )}
+                    {item.videoMp4 && (
+                      <source src={item.videoMp4} type="video/mp4" />
+                    )}
+                  </video>
+                </div>
+              ) : item.image ? (
                 <div className="relative aspect-[16/10] w-full overflow-hidden">
                   <Image
                     src={item.image}

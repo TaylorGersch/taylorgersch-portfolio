@@ -1,0 +1,69 @@
+---
+title: "Stripe"
+category: "Internal Tooling, User Research, Design Systems"
+dates: "TODO — confirm project year(s) with Taylor"
+intro: "Stripe needed a brand-new internal feature to support how a specific internal team actually worked, including the wide range of customizations built into nearly every business contract they sign. I partnered with Stripe to design the tool, interviewing its primary users to understand their workflow needs, extending Stripe's existing design system in new ways, and building a flexible foundation that could adapt to each contract's requirements."
+heroType: "photo"
+heroVideoWebm: "/videos/stripe-gradient.webm"
+heroVideoMp4: "/videos/stripe-gradient.mp4"
+heroVideoPoster: "/images/stripe-gradient-poster.webp"
+---
+
+{/*
+  PREP NOTE (structural scaffold, most of it real — not guessed):
+  Mirrors docs/case-study-template.mdx. Overview/role, the process, and
+  the solution's two paragraphs are drawn directly from Taylor's own
+  notes (interviewing primary users, extending Stripe's design system in
+  new ways, building in support for contract-level customization) — not
+  invented. Three things below ARE drafted/best-guess and need Taylor's
+  sign-off before this goes live:
+    1. `dates` in the frontmatter — no timeframe was given, left as an
+       explicit TODO rather than guessing a year.
+    2. `category` tags — reasonable based on the known work, but not
+       confirmed.
+    3. The problem paragraph and the section eyebrow/title — Taylor's
+       notes describe what she DID (research, design-system reuse,
+       customization support) but not the problem in so many words, so
+       this infers a problem statement from context. Reword freely.
+  No outcome/result was included in the source notes, so the outcome
+  block is omitted entirely rather than inventing a stat or a vague
+  qualitative win — add a <div className="border-t border-neutral-200
+  pt-8"><Detail title="The outcome">...</Detail></div> right after
+  </Pair> once there's something real to say.
+  Hero uses the looping gradient video (heroVideoWebm/Mp4/Poster) that
+  also powers this case study's Explore-card thumbnail — see
+  ExploreSection.tsx. The MediaSplit's image/imageWidth/imageHeight below
+  are still omitted on purpose; that section screenshot is a separate,
+  later export.
+*/}
+
+<SubSection>
+
+<MediaSplit eyebrow="Internal Tooling" title="Built for Contract Customization" imageAlt="Stripe internal tool — screenshot pending" side="right">
+
+<TwoCol
+  overview="I partnered with Stripe on a brand-new internal feature, working directly with the tool's primary users throughout the process to make sure it reflected how they actually worked."
+  problem="There wasn't yet a tool built around how this team actually worked, and many of the contracts Stripe signs with businesses require their own customizations, which made a flexible, purpose-built solution even more essential."
+/>
+
+<Pair>
+
+<Detail title="The process">
+
+I spent my time interviewing the primary users of the internal tool, asking specific workflow questions to better understand what kind of functionality they'd need moving forward.
+
+</Detail>
+
+<Detail title="The solution">
+
+I used Stripe's existing design system to keep the tool consistent with the rest of their internal ecosystem, while putting several of its built components to work in new ways to fit this specific workflow.
+
+Many of the contracts Stripe signs with businesses require their own customizations, so I built that flexibility directly into the tool's functionality from the start.
+
+</Detail>
+
+</Pair>
+
+</MediaSplit>
+
+</SubSection>

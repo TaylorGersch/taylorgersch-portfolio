@@ -19,9 +19,29 @@ export default function CaseStudyHero({
     );
   }
 
+  const hasVideo = frontmatter.heroVideoWebm || frontmatter.heroVideoMp4;
+
   return (
     <section className="px-6 pt-6 sm:px-10">
-      {frontmatter.heroImage ? (
+      {hasVideo ? (
+        <div className="relative h-[45vh] w-full overflow-hidden sm:h-[55vh]">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={frontmatter.heroVideoPoster}
+            className="absolute inset-0 h-full w-full object-cover"
+          >
+            {frontmatter.heroVideoWebm && (
+              <source src={frontmatter.heroVideoWebm} type="video/webm" />
+            )}
+            {frontmatter.heroVideoMp4 && (
+              <source src={frontmatter.heroVideoMp4} type="video/mp4" />
+            )}
+          </video>
+        </div>
+      ) : frontmatter.heroImage ? (
         <div className="relative h-[45vh] w-full overflow-hidden sm:h-[55vh]">
           <Image
             src={frontmatter.heroImage}

@@ -13,6 +13,13 @@ export type CaseStudyFrontmatter = {
   heroText?: string; // used by gradient-typewriter hero
   heroLabel?: string; // placeholder label used by photo hero (when no real image is available)
   heroImage?: string; // real photo path (e.g. "/images/trustage.webp"); falls back to a placeholder when omitted
+  // Looping background video for the photo hero, used instead of heroImage
+  // when present (e.g. the Stripe gradient loop). Provide both formats —
+  // webm first (much smaller), mp4 as the compatibility fallback — plus a
+  // poster frame for the moment before the video can play.
+  heroVideoWebm?: string;
+  heroVideoMp4?: string;
+  heroVideoPoster?: string;
 };
 
 export function getAllCaseStudySlugs(): string[] {
