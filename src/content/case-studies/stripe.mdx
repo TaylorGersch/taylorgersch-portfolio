@@ -1,8 +1,8 @@
 ---
 title: "Stripe"
 category: "Internal Tooling, User Research, Design Systems"
-dates: "TODO — confirm project year(s) with Taylor"
-intro: "Stripe needed a brand-new internal feature to support how a specific internal team actually worked, including the wide range of customizations built into nearly every business contract they sign. I partnered with Stripe to design the tool, interviewing its primary users to understand their workflow needs, extending Stripe's existing design system in new ways, and building a flexible foundation that could adapt to each contract's requirements."
+dates: "Q2, 2021"
+intro: "Stripe needed a brand-new internal feature to support how the go-to-market team actually worked, including the wide range of customizations built into nearly every business contract they sign. I partnered with Stripe to design the tool, interviewing its primary users to understand their workflow needs, extending Stripe's existing design system in new ways, and building a flexible foundation that could adapt to each contract's requirements."
 heroType: "photo"
 heroVideoWebm: "/videos/stripe-gradient.webm"
 heroVideoMp4: "/videos/stripe-gradient.mp4"
@@ -11,20 +11,28 @@ heroVideoPoster: "/images/stripe-gradient-poster.webp"
 
 {/*
   PREP NOTE (structural scaffold, most of it real — not guessed):
-  Mirrors docs/case-study-template.mdx. Overview/role, the process, and
-  the solution's two paragraphs are drawn directly from Taylor's own
-  notes (interviewing primary users, extending Stripe's design system in
-  new ways, building in support for contract-level customization) — not
-  invented. Three things below ARE drafted/best-guess and need Taylor's
-  sign-off before this goes live:
-    1. `dates` in the frontmatter — no timeframe was given, left as an
-       explicit TODO rather than guessing a year.
-    2. `category` tags — reasonable based on the known work, but not
+  Mirrors docs/case-study-template.mdx. Two things below ARE still
+  drafted/best-guess and need Taylor's sign-off before this goes live:
+    1. `category` tags — reasonable based on the known work, but not
        confirmed.
-    3. The problem paragraph and the section eyebrow/title — Taylor's
-       notes describe what she DID (research, design-system reuse,
-       customization support) but not the problem in so many words, so
-       this infers a problem statement from context. Reword freely.
+    2. The problem paragraph — Taylor's notes describe what she DID
+       (research, design-system reuse, customization support) but not
+       the problem in so many words, so this infers a problem statement
+       from context. Reword freely.
+  `dates` in the frontmatter is now confirmed as "Q2, 2021".
+  Everything else in this section is confirmed as of this pass: the
+  intro (frontmatter), the section eyebrow ("Stripe Internal Tooling"),
+  title ("Contract Customizations"), Overview + Role (names and frames
+  Fortuna — what it does, why it needed to flex on currency, geography,
+  timespan, and negotiated terms — then Taylor's role partnering with
+  Stripe's product manager and the tool's primary users), the process
+  (interviews plus getting familiar with / adapting Stripe's design
+  system for this internal tool), and the solution (the resulting
+  customizable contract tool and what it lets the go-to-market team do
+  for both sides of a deal — rewritten this pass to stop repeating the
+  design-system beat now covered in the process, and to lean less on
+  "flexible/flexibility" since Overview + Role and the problem paragraph
+  already use it).
   No outcome/result was included in the source notes, so the outcome
   block is omitted entirely rather than inventing a stat or a vague
   qualitative win — add a <div className="border-t border-neutral-200
@@ -32,17 +40,17 @@ heroVideoPoster: "/images/stripe-gradient-poster.webp"
   </Pair> once there's something real to say.
   Hero uses the looping gradient video (heroVideoWebm/Mp4/Poster) that
   also powers this case study's Explore-card thumbnail — see
-  ExploreSection.tsx. The MediaSplit's image/imageWidth/imageHeight below
-  are still omitted on purpose; that section screenshot is a separate,
-  later export.
+  ExploreSection.tsx. The MediaSplit's image is now real — Taylor's
+  Fortuna UI export, resized to 2400x2559 and converted to webp at
+  public/images/stripe-fortuna-contract-tool.webp.
 */}
 
 <SubSection>
 
-<MediaSplit eyebrow="Internal Tooling" title="Built for Contract Customization" imageAlt="Stripe internal tool — screenshot pending" side="right">
+<MediaSplit eyebrow="Stripe Internal Tooling" title="Contract Customizations" image="/images/stripe-fortuna-contract-tool.webp" imageAlt="Fortuna, Stripe's internal contract customization tool, showing a contract's solutions, tiered pricing, and margin summary, alongside a warning tooltip interaction for a custom pricing solution" imageWidth="2400" imageHeight="2559" side="right">
 
 <TwoCol
-  overview="I partnered with Stripe on a brand-new internal feature, working directly with the tool's primary users throughout the process to make sure it reflected how they actually worked."
+  overview="Fortuna is the internal tool Stripe's go-to-market team uses to customize contracts with the businesses they partner with. Every contract can flex on currency, geography, timespan, and other negotiated terms, so the tool needed to be flexible enough to handle that complexity while still streamlining the day-to-day workflow for the people using it. I partnered with Stripe's product manager to define the product work, then collaborated directly with the tool's primary users to shape a workflow that actually worked better for them."
   problem="There wasn't yet a tool built around how this team actually worked, and many of the contracts Stripe signs with businesses require their own customizations, which made a flexible, purpose-built solution even more essential."
 />
 
@@ -50,15 +58,13 @@ heroVideoPoster: "/images/stripe-gradient-poster.webp"
 
 <Detail title="The process">
 
-I spent my time interviewing the primary users of the internal tool, asking specific workflow questions to better understand what kind of functionality they'd need moving forward.
+I spent my time interviewing the primary users of the internal tool, asking specific workflow questions to better understand what kind of functionality they'd need moving forward. Alongside those conversations, I got familiar with Stripe's existing design system and identified where I could adapt existing components to feel more purpose-built for this kind of internal, day-to-day tool.
 
 </Detail>
 
 <Detail title="The solution">
 
-I used Stripe's existing design system to keep the tool consistent with the rest of their internal ecosystem, while putting several of its built components to work in new ways to fit this specific workflow.
-
-Many of the contracts Stripe signs with businesses require their own customizations, so I built that flexibility directly into the tool's functionality from the start.
+The result is a highly customizable contract tool that gives Stripe's go-to-market team the flexibility to shape each deal around what actually works, for Stripe and for the business on the other side of the table. Rather than forcing every negotiation into the same rigid template, the tool adapts to each contract's specific terms, so the team can show up for existing and prospective customers in a way that fits both parties.
 
 </Detail>
 
