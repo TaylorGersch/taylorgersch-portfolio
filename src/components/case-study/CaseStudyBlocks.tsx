@@ -70,12 +70,34 @@ export function Pair({ children }: { children: React.ReactNode }) {
  *
  * The eyebrow/title live here (not in <SubSection>) specifically so they
  * share the same grid row as the image — the image's top edge lines up
- * with the eyebrow, and the body content (passed as `children`) is
- * vertically centered in the remaining space below the heading, matching
- * the live Squarespace layout. The image renders at its native aspect
- * ratio (no crop) via explicit width/height instead of `fill`, so
- * `imageWidth`/`imageHeight` must match the source file's real pixel
- * dimensions.
+ * with the eyebrow, and the body content (passed as `children`) top-aligns
+ * directly below the heading (fixed `titleGapClassName` gap, no more). Any
+ * leftover height — e.g. when the image is taller than the copy — shows up
+ * as blank space at the BOTTOM of the text column instead.
+ *
+ * This used to be `justify-center` on the content wrapper (vertically
+ * centering the copy in whatever space was left below the heading), which
+ * matched a live Squarespace layout but had a hidden dependency: the
+ * visible title-to-content gap grew or shrank with how much slack existed
+ * between the copy's rendered height and the image's, and that slack is
+ * font-dependent. Every section here was verified in this sandbox using
+ * Inter (the self-hosted fallback), where `--font-sans` normally resolves
+ * to "Helvetica Neue" on macOS (see globals.css) — a narrower font that
+ * wraps the same copy to fewer lines. On a section with enough copy to
+ * fill the image's height either way (e.g. Organizing Cases, which has a
+ * third "outcome" paragraph the shorter sections don't), the centering
+ * was a no-op and this was invisible. On a shorter section (e.g. Stripe's
+ * Contract Customizations, no outcome block yet), Helvetica Neue's
+ * tighter wrap left real slack, and centering pushed the copy down by
+ * however much was left — a large, font-only gap that no amount of
+ * testing in a Linux sandbox without Helvetica Neue installed would catch.
+ * Top-aligning removes the font dependency entirely: the gap is always
+ * exactly `titleGapClassName`, everywhere, regardless of copy length,
+ * image height, or which font actually renders.
+ *
+ * The image renders at its native aspect ratio (no crop) via explicit
+ * width/height instead of `fill`, so `imageWidth`/`imageHeight` must match
+ * the source file's real pixel dimensions.
  *
  * `image`/`imageWidth`/`imageHeight` are all optional together — when a
  * section's copy is ready before its real exports are, omit them and the
@@ -157,9 +179,7 @@ export function MediaSplit({
             {title}
           </h3>
         )}
-        <div className="flex flex-1 flex-col justify-center gap-10">
-          {children}
-        </div>
+        <div className="flex flex-col gap-10">{children}</div>
       </div>
       <div
         className={`relative w-full ${side === "left" ? "sm:order-1" : "sm:order-2"}`}
