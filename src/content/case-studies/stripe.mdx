@@ -75,3 +75,54 @@ The result is a highly customizable contract tool that gives Stripe's go-to-mark
 </MediaSplit>
 
 </SubSection>
+
+{/*
+  PREP NOTE (structural scaffold only — layout + placeholder, per Taylor's
+  request; no copy drafted yet):
+  This is the second Stripe Product Feature section. Taylor's raw notes for
+  it, kept here so nothing gets lost before the real copy is written:
+    - Core surface area: ACH, OAuth, underwriting flows, and micro-deposits.
+    - User story 1 (B2B SaaS): a fictional "Housecall Pro" checks its end
+      customers' balances to confirm they can cover a charge before it runs.
+    - User story 2 (B2B Financial Solutions): a fictional "Clearbanc" uses
+      balances + transactions to underwrite a business and size a loan.
+  Eyebrow/title are FINAL, per Taylor: "Consumer Bank Account Connections" /
+  "Authentication Flows". Deliberately does NOT reuse "Stripe Internal
+  Tooling" the way the first section's eyebrow does — Taylor flagged that
+  this feature is customer-facing, not an internal tool, and wants that
+  distinction visible rather than folding it into the same "internal
+  tooling" framing as Contract Customizations.
+  Open question this raises (not yet resolved, flagged for Taylor): the
+  case-study-level frontmatter above — `category: "Internal Tooling, User
+  Research, Design Systems"` and the `intro` ("Stripe needed a brand-new
+  internal feature...") — currently frame the WHOLE Stripe case study as
+  internal-tooling work. That was accurate when Contract Customizations was
+  the only section; now that a customer-facing feature is joining it, those
+  may need broadening (e.g. adding "Consumer-Facing Design" to `category`,
+  or loosening "internal feature" in the intro) so the case study doesn't
+  read as internal-only. Left untouched pending Taylor's call.
+  `side="left"` alternates from the first section's `side="right"`, matching
+  the left/right rhythm used across other multi-section case studies (e.g.
+  TruStage, Airbnb).
+  No `image`/`imageWidth`/`imageHeight` yet — renders <PlaceholderImage>
+  until a real screenshot exists. TwoCol/Detail copy is TODO.
+*/}
+
+<SubSection>
+
+<MediaSplit eyebrow="Consumer Bank Account Connections" title="Authentication Flows" imageAlt="Stripe consumer-facing authentication flow — screenshot pending" side="left">
+
+<TwoCol
+  overview="TODO — overview + role copy covering ACH, OAuth, underwriting flows, and micro-deposits."
+  problem="TODO — the problem these authentication flows solve, e.g. a B2B SaaS platform confirming an end customer can cover a charge, or a B2B financial platform underwriting a business off its balance and transaction history."
+/>
+
+<Detail title="The solution">
+
+TODO — what shipped for the authentication flows.
+
+</Detail>
+
+</MediaSplit>
+
+</SubSection>
