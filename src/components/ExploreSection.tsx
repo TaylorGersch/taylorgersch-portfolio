@@ -18,6 +18,13 @@ type ExploreItem = {
 
 const EXPLORE: ExploreItem[] = [
   {
+    slug: "hinge-health",
+    title: "Hinge Health",
+    description:
+      "Led research, strategy, and north star vision for Medicare product expansion, identifying older adults' unique needs to inform three strategic focus areas for aging safely at home.",
+    image: "/images/hinge-health.webp",
+  },
+  {
     slug: "stripe",
     title: "Stripe",
     description:
@@ -25,13 +32,6 @@ const EXPLORE: ExploreItem[] = [
     videoWebm: "/videos/stripe-gradient.webm",
     videoMp4: "/videos/stripe-gradient.mp4",
     videoPoster: "/images/stripe-gradient-poster.webp",
-  },
-  {
-    slug: "hinge-health",
-    title: "Hinge Health",
-    description:
-      "Led research, strategy, and north star vision for Medicare product expansion, identifying older adults' unique needs to inform three strategic focus areas for aging safely at home.",
-    image: "/images/hinge-health.webp",
   },
   {
     slug: "trustage",
