@@ -133,6 +133,11 @@ export function MediaSplit({
   imageAlt,
   imageWidth,
   imageHeight,
+  videoMp4,
+  videoWebm,
+  videoWidth,
+  videoHeight,
+  videoPoster,
   placeholderRatio = "aspect-[4/3]",
   side = "right",
   children,
@@ -145,7 +150,7 @@ export function MediaSplit({
   titleGapClassName?: string;
   /** Real image path — omit (along with imageWidth/imageHeight) to render
    * a placeholder instead while the section's copy/structure is drafted
-   * ahead of real exports. */
+   * ahead of real exports. Ignored when a video is provided (see below). */
   image?: string;
   imageAlt: string;
   /** Pass as a quoted string, e.g. `imageWidth="1500"` — see the
@@ -153,8 +158,25 @@ export function MediaSplit({
    * pipeline. */
   imageWidth?: number | string;
   imageHeight?: number | string;
-  /** Aspect-ratio class for the placeholder shown when `image` is
-   * omitted — ignored once a real image is provided. */
+  /** MP4 source for the video variant of the image slot — used for flow
+   * walkthroughs assembled from a sequence of screenshots rather than one
+   * static image. Takes priority over `image` when either video source is
+   * present. `<video>` has no `alt`, so `imageAlt` doubles as its
+   * `aria-label`. Autoplays muted/looped/inline, matching the hero video
+   * treatment in <CaseStudyHero>. */
+  videoMp4?: string;
+  /** WebM source, tried first for its smaller file size — optional,
+   * falls back to `videoMp4` in browsers that don't support it. */
+  videoWebm?: string;
+  /** Native pixel dimensions of the video file, same quoted-string rule as
+   * imageWidth/imageHeight — set as the <video> element's own width/height
+   * attributes so the layout doesn't shift once it loads. */
+  videoWidth?: number | string;
+  videoHeight?: number | string;
+  /** Optional poster frame shown before the video starts playing. */
+  videoPoster?: string;
+  /** Aspect-ratio class for the placeholder shown when neither `image` nor
+   * a video is provided — ignored once real media is provided. */
   placeholderRatio?: string;
   side?: "left" | "right";
   children: React.ReactNode;
@@ -163,6 +185,9 @@ export function MediaSplit({
     side === "left" ? "sm:pl-10 sm:pr-[60px]" : "sm:pl-[60px] sm:pr-10";
   const widthNum = imageWidth ? Number(imageWidth) : undefined;
   const heightNum = imageHeight ? Number(imageHeight) : undefined;
+  const videoWidthNum = videoWidth ? Number(videoWidth) : undefined;
+  const videoHeightNum = videoHeight ? Number(videoHeight) : undefined;
+  const hasVideo = Boolean(videoMp4 || videoWebm);
 
   return (
     <div
@@ -184,7 +209,22 @@ export function MediaSplit({
       <div
         className={`relative w-full ${side === "left" ? "sm:order-1" : "sm:order-2"}`}
       >
-        {image && widthNum && heightNum ? (
+        {hasVideo ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-label={imageAlt}
+            poster={videoPoster}
+            width={videoWidthNum}
+            height={videoHeightNum}
+            className="h-auto w-full"
+          >
+            {videoWebm && <source src={videoWebm} type="video/webm" />}
+            {videoMp4 && <source src={videoMp4} type="video/mp4" />}
+          </video>
+        ) : image && widthNum && heightNum ? (
           <Image
             src={image}
             alt={imageAlt}

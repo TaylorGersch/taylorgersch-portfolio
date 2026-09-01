@@ -104,13 +104,21 @@ The result is a highly customizable contract tool that gives Stripe's go-to-mark
   `side="left"` alternates from the first section's `side="right"`, matching
   the left/right rhythm used across other multi-section case studies (e.g.
   TruStage, Airbnb).
-  No `image`/`imageWidth`/`imageHeight` yet — renders <PlaceholderImage>
-  until a real screenshot exists. TwoCol/Detail copy is TODO.
+  Image slot is now the real Authentication Flows walkthrough: a video
+  (videoMp4/videoWidth/videoHeight below) rather than a static image,
+  assembled from the actual Figma prototype (fileKey m8sAXGBnirEx96AFZq08Sx,
+  page "Stripe") — 17 real frames from the ACH/Citibank linking flow
+  screenshotted via the Figma MCP and stitched into a crossfade sequence:
+  Hippo checkout -> consent modal -> bank picker -> Citibank login ->
+  connecting -> select-account (single, happy path) -> success -> back to
+  checkout, then a second pass showing the multi-account checkbox variant
+  before ending back at checkout. Sequence/pacing approved by Taylor
+  2026-09-01. TwoCol/Detail copy is still TODO — Taylor is writing that next.
 */}
 
 <SubSection>
 
-<MediaSplit eyebrow="Consumer Bank Account Connections" title="Authentication Flows" imageAlt="Stripe consumer-facing authentication flow — screenshot pending" side="left">
+<MediaSplit eyebrow="Consumer Bank Account Connections" title="Authentication Flows" imageAlt="Walkthrough of the consumer-facing bank account authentication flow: connecting a Citibank account via ACH, including the multi-account selection variant" videoMp4="/videos/stripe-auth-flow.mp4" videoWidth="1240" videoHeight="840" side="left">
 
 <TwoCol
   overview="TODO — overview + role copy covering ACH, OAuth, underwriting flows, and micro-deposits."
