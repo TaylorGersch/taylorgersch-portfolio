@@ -77,43 +77,43 @@ The result is a highly customizable contract tool that gives Stripe's go-to-mark
 </SubSection>
 
 {/*
-  PREP NOTE (structural scaffold only — layout + placeholder, per Taylor's
-  request; no copy drafted yet):
-  This is the second Stripe Product Feature section. Taylor's raw notes for
-  it, kept here so nothing gets lost before the real copy is written:
-    - Core surface area: ACH, OAuth, underwriting flows, and micro-deposits.
-    - User story 1 (B2B SaaS): a fictional "Housecall Pro" checks its end
-      customers' balances to confirm they can cover a charge before it runs.
-    - User story 2 (B2B Financial Solutions): a fictional "Clearbanc" uses
-      balances + transactions to underwrite a business and size a loan.
-  Eyebrow/title are FINAL, per Taylor: "Consumer Bank Account Connections" /
-  "Authentication Flows". Deliberately does NOT reuse "Stripe Internal
-  Tooling" the way the first section's eyebrow does — Taylor flagged that
-  this feature is customer-facing, not an internal tool, and wants that
-  distinction visible rather than folding it into the same "internal
-  tooling" framing as Contract Customizations.
-  Open question this raises (not yet resolved, flagged for Taylor): the
-  case-study-level frontmatter above — `category: "Internal Tooling, User
-  Research, Design Systems"` and the `intro` ("Stripe needed a brand-new
-  internal feature...") — currently frame the WHOLE Stripe case study as
-  internal-tooling work. That was accurate when Contract Customizations was
-  the only section; now that a customer-facing feature is joining it, those
-  may need broadening (e.g. adding "Consumer-Facing Design" to `category`,
-  or loosening "internal feature" in the intro) so the case study doesn't
-  read as internal-only. Left untouched pending Taylor's call.
-  `side="left"` alternates from the first section's `side="right"`, matching
-  the left/right rhythm used across other multi-section case studies (e.g.
-  TruStage, Airbnb).
-  Image slot is now the real Authentication Flows walkthrough: a video
-  (videoMp4/videoWidth/videoHeight below) rather than a static image,
-  assembled from the actual Figma prototype (fileKey m8sAXGBnirEx96AFZq08Sx,
-  page "Stripe") — 17 real frames from the ACH/Citibank linking flow
-  screenshotted via the Figma MCP and stitched into a crossfade sequence:
-  Hippo checkout -> consent modal -> bank picker -> Citibank login ->
-  connecting -> select-account (single, happy path) -> success -> back to
-  checkout, then a second pass showing the multi-account checkbox variant
-  before ending back at checkout. Sequence/pacing approved by Taylor
-  2026-09-01. TwoCol/Detail copy is still TODO — Taylor is writing that next.
+  PREP NOTE: copy is now final for this section, per Taylor (2026-09-01).
+  Confirmed: eyebrow/title ("Consumer Bank Account Connections" /
+  "Authentication Flows", deliberately not reusing "Stripe Internal
+  Tooling" — this feature is customer-facing, not internal), Overview +
+  Role (what Stripe Connections lets consumers/merchants do, plus Taylor's
+  role defining user stories/prototypes and building an executive demo),
+  the problem (inconsistent authentication flows across direct
+  connections, OAuth, underwriting services, and micro-deposits before
+  this work), the process (competitive analysis, then balancing a
+  consistent Stripe look/feel against merchant white-label flexibility),
+  and the solution (one cohesive consent -> bank selection -> secure auth
+  -> account verification flow, embeddable in merchant checkout, handling
+  both single- and multi-account households).
+  Taylor's original raw notes referenced two fictional example companies
+  ("Housecall Pro", "Clearbanc") as B2B user-story stand-ins — she asked
+  to drop both from the public copy (they were just "Acme-like"
+  placeholders, not meant to ship), so the solution paragraph stays
+  general rather than naming any example merchant.
+  Open question, still unresolved (flagged for Taylor, not touched this
+  pass): the case-study-level frontmatter above — `category: "Internal
+  Tooling, User Research, Design Systems"` and the `intro` ("Stripe
+  needed a brand-new internal feature...") — still frame the WHOLE case
+  study as internal-tooling work, which no longer fully fits now that
+  this customer-facing section exists alongside Contract Customizations.
+  No outcome/result was in Taylor's notes, so that block is omitted
+  entirely rather than inventing a stat — same convention as Contract
+  Customizations above.
+  `side="left"` alternates from the first section's `side="right"`.
+  Image slot is the real Authentication Flows walkthrough video
+  (videoMp4/videoWidth/videoHeight below), assembled from the actual
+  Figma prototype (fileKey m8sAXGBnirEx96AFZq08Sx, page "Stripe") — 17
+  real frames from the ACH/Citibank linking flow screenshotted via the
+  Figma MCP and stitched into a crossfade sequence: checkout -> consent
+  modal -> bank picker -> bank login -> connecting -> select-account
+  (single, happy path) -> success -> back to checkout, then a second pass
+  showing the multi-account checkbox variant before ending back at
+  checkout. Sequence/pacing approved by Taylor 2026-09-01.
 */}
 
 <SubSection>
@@ -121,15 +121,25 @@ The result is a highly customizable contract tool that gives Stripe's go-to-mark
 <MediaSplit eyebrow="Consumer Bank Account Connections" title="Authentication Flows" imageAlt="Walkthrough of the consumer-facing bank account authentication flow: connecting a Citibank account via ACH, including the multi-account selection variant" videoMp4="/videos/stripe-auth-flow.mp4" videoWidth="1240" videoHeight="840" side="left">
 
 <TwoCol
-  overview="TODO — overview + role copy covering ACH, OAuth, underwriting flows, and micro-deposits."
-  problem="TODO — the problem these authentication flows solve, e.g. a B2B SaaS platform confirming an end customer can cover a charge, or a B2B financial platform underwriting a business off its balance and transaction history."
+  overview="Stripe Connections lets consumers link their bank accounts to Stripe, giving them — or the merchants they're interacting with — access to a range of product experiences, from processing ACH payments to extending credit to personal finance management. I worked with Stripe's product manager to define the user stories and corresponding prototypes, then built out a large demo to walk the executive team through the experience."
+  problem="Before Stripe Connections, authentication flows were inconsistent across direct connections, OAuth connections, underwriting services, and micro-deposits. This work established a consistent look, feel, timing, and flow across all Stripe-related authentication workflows."
 />
+
+<Pair>
+
+<Detail title="The process">
+
+Before designing the flows themselves, I did extensive competitive analysis to understand best practices across the industry. From that research, I identified the need for a consistent Stripe look and feel that still gave individual merchants enough flexibility to white-label the experience if they chose to.
+
+</Detail>
 
 <Detail title="The solution">
 
-TODO — what shipped for the authentication flows.
+I designed one cohesive flow that carries a user from consent through bank selection, secure authentication, and account verification — consistent whether the underlying connection is direct, OAuth-based, an underwriting service, or micro-deposits. It's embeddable directly into merchant checkout, and handles both single- and multi-account households so users can pick exactly which account to connect.
 
 </Detail>
+
+</Pair>
 
 </MediaSplit>
 
