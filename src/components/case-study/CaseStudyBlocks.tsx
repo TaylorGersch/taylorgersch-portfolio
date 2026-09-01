@@ -219,7 +219,7 @@ export function MediaSplit({
             poster={videoPoster}
             width={videoWidthNum}
             height={videoHeightNum}
-            className="h-auto w-full"
+            className="h-auto w-full rounded-[8px]"
           >
             {videoWebm && <source src={videoWebm} type="video/webm" />}
             {videoMp4 && <source src={videoMp4} type="video/mp4" />}
