@@ -49,7 +49,7 @@ export default function CaseStudyHero({
             fill
             priority
             className="object-cover"
-            style={{ objectPosition: "center 30%" }}
+            style={{ objectPosition: frontmatter.heroObjectPosition ?? "center 30%" }}
           />
         </div>
       ) : (

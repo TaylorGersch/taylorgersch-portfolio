@@ -13,6 +13,10 @@ export type CaseStudyFrontmatter = {
   heroText?: string; // used by gradient-typewriter hero
   heroLabel?: string; // placeholder label used by photo hero (when no real image is available)
   heroImage?: string; // real photo path (e.g. "/images/trustage.webp"); falls back to a placeholder when omitted
+  // CSS object-position value for the photo hero's <Image> (e.g. "center 36%").
+  // Overrides CaseStudyHero's default ("center 30%") per case study, so
+  // recropping one hero doesn't shift every other photo hero on the site.
+  heroObjectPosition?: string;
   // Looping background video for the photo hero, used instead of heroImage
   // when present (e.g. the Stripe gradient loop). Provide both formats —
   // webm first (much smaller), mp4 as the compatibility fallback — plus a
