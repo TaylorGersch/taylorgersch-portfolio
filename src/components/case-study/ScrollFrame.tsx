@@ -417,3 +417,98 @@ export function NotificationFrameworkSplit({
     </div>
   );
 }
+
+/**
+ * <MediaSplit>'s layout, but with the image side replaced by a static
+ * image stacked on top of a scrollable <ScrollVisual> — for a section
+ * that needs one normal screenshot plus one oversized artifact (e.g. a
+ * long comparison table) that would break a normal MediaSplit image
+ * slot. Generalized sibling of <NotificationFrameworkSplit>, which
+ * hardcodes two scrollable visuals (one horizontal, one vertical) for
+ * Airbnb's Notification Framework section specifically — this one keeps
+ * the top visual a plain static image, since not every two-visual
+ * section needs both halves to scroll.
+ */
+export function ScrollSplit({
+  eyebrow,
+  title,
+  titleGapClassName = "mb-8",
+  image,
+  imageAlt,
+  imageWidth,
+  imageHeight,
+  scrollImage,
+  scrollImageAlt,
+  scrollImageWidth,
+  scrollImageHeight,
+  scrollOrientation = "vertical",
+  scrollLabel,
+  side = "right",
+  children,
+}: {
+  eyebrow?: string;
+  title?: string;
+  titleGapClassName?: string;
+  /** Real image path for the static (non-scrollable) top visual. */
+  image: string;
+  imageAlt: string;
+  /** Pass as a quoted string — see the MDX numeric-prop gotcha documented
+   * on <MediaSplit> in CaseStudyBlocks.tsx (any `{...}` JSX expression
+   * attribute, not just numbers/objects, silently drops in this MDX
+   * pipeline — quoted strings are the only safe way to pass these). */
+  imageWidth: number | string;
+  imageHeight: number | string;
+  /** Path to the oversized artifact shown in the scrollable frame below. */
+  scrollImage: string;
+  scrollImageAlt: string;
+  scrollImageWidth: number | string;
+  scrollImageHeight: number | string;
+  scrollOrientation?: "horizontal" | "vertical";
+  scrollLabel?: string;
+  side?: "left" | "right";
+  children: React.ReactNode;
+}) {
+  const outerPadding =
+    side === "left" ? "sm:pl-10 sm:pr-[60px]" : "sm:pl-[60px] sm:pr-10";
+  const widthNum = Number(imageWidth);
+  const heightNum = Number(imageHeight);
+
+  return (
+    <div
+      className={`grid grid-cols-1 gap-10 px-6 py-10 sm:grid-cols-2 sm:gap-12 sm:py-14 ${outerPadding}`}
+    >
+      <div className={side === "left" ? "sm:order-2" : "sm:order-1"}>
+        {eyebrow && <p className="text-sm text-neutral-500">{eyebrow}</p>}
+        {title && (
+          <h3
+            className={`mt-2 text-3xl tracking-tight text-neutral-800 sm:text-4xl ${titleGapClassName}`}
+          >
+            {title}
+          </h3>
+        )}
+        <div className="flex flex-col gap-10">{children}</div>
+      </div>
+
+      <div
+        className={`flex flex-col gap-8 ${side === "left" ? "sm:order-1" : "sm:order-2"}`}
+      >
+        <Image
+          src={image}
+          alt={imageAlt}
+          width={widthNum}
+          height={heightNum}
+          sizes="(min-width: 640px) 50vw, 100vw"
+          className="h-auto w-full"
+        />
+        <ScrollVisual
+          orientation={scrollOrientation}
+          image={scrollImage}
+          imageAlt={scrollImageAlt}
+          imageWidth={scrollImageWidth}
+          imageHeight={scrollImageHeight}
+          label={scrollLabel}
+        />
+      </div>
+    </div>
+  );
+}

@@ -27,7 +27,10 @@ import {
   ProductWalkthrough,
   WalkthroughRegion,
 } from "@/components/case-study/ProductWalkthrough";
-import { NotificationFrameworkSplit } from "@/components/case-study/ScrollFrame";
+import {
+  NotificationFrameworkSplit,
+  ScrollSplit,
+} from "@/components/case-study/ScrollFrame";
 
 export function generateStaticParams() {
   return getAllCaseStudySlugs().map((slug) => ({ slug }));
@@ -65,6 +68,7 @@ export default async function CaseStudyPage({
       ProductWalkthrough,
       WalkthroughRegion,
       NotificationFrameworkSplit,
+      ScrollSplit,
     },
     options: { parseFrontmatter: false },
   });

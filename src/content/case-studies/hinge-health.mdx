@@ -13,20 +13,31 @@ heroLabel: "TODO — real hero photo pending; the current heroImage is a generic
   PREP NOTE (structural scaffold only, no invented copy):
   Mirrors docs/case-study-template.mdx. The eyebrow/title values and the
   two closing quotes below are real, already-known content from the
-  earlier Squarespace review — not guessed. Section 1's TwoCol/Detail copy
-  is now real (Taylor's own account of the research phase, 2026-09-04);
-  Section 2's is still TODO. Grouping of the original 7 image labels into two MediaSplit
+  earlier Squarespace review — not guessed. Both sections' TwoCol/Detail
+  (and Section 2's added Outcome block) copy is now real — Taylor's own
+  account of the research phase and the Medicare Advantage north star
+  work, 2026-09-04. Grouping of the original 7 image labels into two MediaSplit
   sections + one supplementary carousel is my best structural guess at
   the natural narrative arc (research → north star design → community
   features); re-order freely once the real screenshots make the actual
-  flow obvious. Once real screenshots exist, add image/imageWidth/
-  imageHeight to each <MediaSplit> (real pixel dimensions via PIL) to
-  replace the placeholder.
+  flow obvious.
+
+  Section 1 now has real images (2026-09-04): swapped its <MediaSplit>
+  for the new <ScrollSplit> (src/components/case-study/ScrollFrame.tsx),
+  since this section needed two visuals — a static AgeBold competitor
+  deep-dive image on top, plus the full Hinge Health Medicare Advantage
+  competitive-analysis table below in a scrollable/expandable frame (too
+  tall for a normal MediaSplit image slot at native resolution). Taylor
+  chose the AgeBold deep dive over the Nymbl one for this slot (Nymbl's
+  second panel was too text-dense to read at MediaSplit's ~50%-width
+  column); the Nymbl spread is saved for the future supplementary
+  carousel instead, along with AgeBold's own individual panels if she
+  wants them broken out later. Section 2 still needs its real image(s).
 */}
 
 <SubSection>
 
-<MediaSplit eyebrow="UX Research" title="Understanding Senior Behaviors & the Competitive Landscape" imageAlt="User experience research to understand senior behaviors — screenshot pending" side="right">
+<ScrollSplit eyebrow="UX Research" title="Understanding Senior Behaviors & the Competitive Landscape" image="/images/hinge-health-competitors-agebold.webp" imageAlt="AgeBold competitor deep dive: annotated screenshots of AgeBold's mobility and balance routine flows, paired with a chart showing US smartphone adoption among seniors nearly quadrupling from 2011 to 2016" imageWidth="2651" imageHeight="2999" scrollImage="/images/hinge-health-competitive-analysis.webp" scrollImageAlt="Competitive analysis matrix comparing Hinge Health's Medicare Advantage opportunity against Nymbl, Sword Health, Age Bold, and Balanced across value proposition, target market, pros, gaps, and a feature-by-feature user needs matrix" scrollImageWidth="2625" scrollImageHeight="5109" scrollLabel="Competitive analysis: Nymbl, Sword Health, Age Bold, Balanced" side="right">
 
 <TwoCol
   overview="I partnered closely with a Hinge Health UX researcher on the research phase of this 12-week engagement, dividing the work across three angles: a landscape analysis, a literature deep dive, and a review of Hinge Health's past internal research studies."
@@ -41,7 +52,7 @@ Halfway through the engagement, we presented these studies back to the relevant 
 
 </Detail>
 
-</MediaSplit>
+</ScrollSplit>
 
 </SubSection>
 
@@ -50,15 +61,27 @@ Halfway through the engagement, we presented these studies back to the relevant 
 <MediaSplit eyebrow="North Star Design" title="Medicare Advantage Onboarding" imageAlt="Northstar onboarding designs for the Medicare Advantage product — screenshot pending" side="left">
 
 <TwoCol
-  overview="TODO — overview + role copy for the north star design."
-  problem="TODO — the problem the north star vision addressed."
+  overview="With the research phase complete, I moved into north star vision design focused specifically on Medicare Advantage. Hinge Health already offered physical therapy advice, routines, and education to other audience segments — this phase was about identifying the onboarding opportunities for members 65 and older specifically."
+  problem="Members 65+ don't share the same needs, technology comfort, or entry points as Hinge Health's existing audience, so the team needed a north star vision for onboarding built around this population specifically, rather than adapting what already existed."
 />
 
 <Detail title="The solution">
 
-TODO — what shipped for the Medicare Advantage north star onboarding.
+Identified the areas of focus for the Medicare Advantage north star and future roadmap, then designed the north star onboarding experience for members 65+.
 
 </Detail>
+
+<div className="border-t border-neutral-200 pt-8">
+
+<Detail title="The outcome">
+
+Delivered exploratory research and a competitive analysis spanning 15+ competitors.
+
+Worked cross-functionally across Hinge Health's teams, including onboarding internal designers onto the engagement.
+
+</Detail>
+
+</div>
 
 </MediaSplit>
 
