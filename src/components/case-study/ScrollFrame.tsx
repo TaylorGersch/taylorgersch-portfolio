@@ -428,6 +428,11 @@ export function NotificationFrameworkSplit({
  * Airbnb's Notification Framework section specifically — this one keeps
  * the top visual a plain static image, since not every two-visual
  * section needs both halves to scroll.
+ *
+ * `image` (and its alt/width/height) is optional — omit it to drop the
+ * static visual entirely and let the <ScrollVisual> alone fill the
+ * right column (used when a section only has the one oversized
+ * artifact worth showing, no separate static screenshot).
  */
 export function ScrollSplit({
   eyebrow,
@@ -449,15 +454,17 @@ export function ScrollSplit({
   eyebrow?: string;
   title?: string;
   titleGapClassName?: string;
-  /** Real image path for the static (non-scrollable) top visual. */
-  image: string;
-  imageAlt: string;
+  /** Real image path for the static (non-scrollable) top visual. Omit
+   * entirely (along with imageAlt/imageWidth/imageHeight) to skip the
+   * static visual and let the <ScrollVisual> alone fill the column. */
+  image?: string;
+  imageAlt?: string;
   /** Pass as a quoted string — see the MDX numeric-prop gotcha documented
    * on <MediaSplit> in CaseStudyBlocks.tsx (any `{...}` JSX expression
    * attribute, not just numbers/objects, silently drops in this MDX
    * pipeline — quoted strings are the only safe way to pass these). */
-  imageWidth: number | string;
-  imageHeight: number | string;
+  imageWidth?: number | string;
+  imageHeight?: number | string;
   /** Path to the oversized artifact shown in the scrollable frame below. */
   scrollImage: string;
   scrollImageAlt: string;
@@ -472,6 +479,7 @@ export function ScrollSplit({
     side === "left" ? "sm:pl-10 sm:pr-[60px]" : "sm:pl-[60px] sm:pr-10";
   const widthNum = Number(imageWidth);
   const heightNum = Number(imageHeight);
+  const hasStaticImage = Boolean(image);
 
   return (
     <div
@@ -492,14 +500,16 @@ export function ScrollSplit({
       <div
         className={`flex flex-col gap-8 ${side === "left" ? "sm:order-1" : "sm:order-2"}`}
       >
-        <Image
-          src={image}
-          alt={imageAlt}
-          width={widthNum}
-          height={heightNum}
-          sizes="(min-width: 640px) 50vw, 100vw"
-          className="h-auto w-full"
-        />
+        {hasStaticImage && (
+          <Image
+            src={image as string}
+            alt={imageAlt as string}
+            width={widthNum}
+            height={heightNum}
+            sizes="(min-width: 640px) 50vw, 100vw"
+            className="h-auto w-full"
+          />
+        )}
         <ScrollVisual
           orientation={scrollOrientation}
           image={scrollImage}

@@ -22,22 +22,23 @@ heroLabel: "TODO — real hero photo pending; the current heroImage is a generic
   features); re-order freely once the real screenshots make the actual
   flow obvious.
 
-  Section 1 now has real images (2026-09-04): swapped its <MediaSplit>
-  for the new <ScrollSplit> (src/components/case-study/ScrollFrame.tsx),
-  since this section needed two visuals — a static AgeBold competitor
-  deep-dive image on top, plus the full Hinge Health Medicare Advantage
-  competitive-analysis table below in a scrollable/expandable frame (too
-  tall for a normal MediaSplit image slot at native resolution). Taylor
-  chose the AgeBold deep dive over the Nymbl one for this slot (Nymbl's
-  second panel was too text-dense to read at MediaSplit's ~50%-width
-  column); the Nymbl spread is saved for the future supplementary
-  carousel instead, along with AgeBold's own individual panels if she
-  wants them broken out later. Section 2 still needs its real image(s).
+  Section 1 now has a real image (2026-09-04, revised 2026-09-07):
+  swapped its <MediaSplit> for the new <ScrollSplit>
+  (src/components/case-study/ScrollFrame.tsx), which shows the full
+  Hinge Health Medicare Advantage competitive-analysis table in a
+  scrollable/expandable frame (too tall for a normal MediaSplit image
+  slot at native resolution). An earlier pass also showed a static
+  AgeBold competitor deep-dive image stacked above the table; Taylor
+  asked to remove it and keep only the competitive-analysis table, so
+  <ScrollSplit>'s `image` prop (now optional) was dropped here — the
+  AgeBold deep dive and the Nymbl spread are both still saved for a
+  future supplementary carousel if she wants them broken out later.
+  Section 2 still needs its real image(s).
 */}
 
 <SubSection>
 
-<ScrollSplit eyebrow="UX Research" title="Understanding Senior Behaviors & the Competitive Landscape" image="/images/hinge-health-competitors-agebold.webp" imageAlt="AgeBold competitor deep dive: annotated screenshots of AgeBold's mobility and balance routine flows, paired with a chart showing US smartphone adoption among seniors nearly quadrupling from 2011 to 2016" imageWidth="2651" imageHeight="2999" scrollImage="/images/hinge-health-competitive-analysis.webp" scrollImageAlt="Competitive analysis matrix comparing Hinge Health's Medicare Advantage opportunity against Nymbl, Sword Health, Age Bold, and Balanced across value proposition, target market, pros, gaps, and a feature-by-feature user needs matrix" scrollImageWidth="2625" scrollImageHeight="5109" scrollLabel="Competitive analysis: Nymbl, Sword Health, Age Bold, Balanced" side="right">
+<ScrollSplit eyebrow="UX Research" title="Understanding Senior Behaviors & the Competitive Landscape" scrollImage="/images/hinge-health-competitive-analysis.webp" scrollImageAlt="Competitive analysis matrix comparing Hinge Health's Medicare Advantage opportunity against Nymbl, Sword Health, Age Bold, and Balanced across value proposition, target market, pros, gaps, and a feature-by-feature user needs matrix" scrollImageWidth="2625" scrollImageHeight="5109" scrollLabel="Competitive analysis: Nymbl, Sword Health, Age Bold, Balanced" side="right">
 
 <TwoCol
   overview="I partnered closely with a Hinge Health UX researcher on the research phase of this 12-week engagement, dividing the work across three angles: a landscape analysis, a literature deep dive, and a review of Hinge Health's past internal research studies."
