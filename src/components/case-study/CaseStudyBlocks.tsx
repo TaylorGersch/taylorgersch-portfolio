@@ -333,7 +333,7 @@ export function QuoteItem({
  */
 export function QuotePair({ children }: { children: React.ReactNode }) {
   return (
-    <div className="grid grid-cols-1 gap-10 bg-neutral-100 px-6 py-[164px] sm:grid-cols-2 sm:gap-16 sm:py-[180px] sm:pl-[60px] sm:pr-10">
+    <div data-quote-pair className="grid grid-cols-1 gap-10 bg-neutral-100 px-6 py-[164px] sm:grid-cols-2 sm:gap-16 sm:py-[180px] sm:pl-[60px] sm:pr-10">
       {children}
     </div>
   );

@@ -157,3 +157,12 @@ article h3,
 article h4 {
   text-wrap: balance;
 }
+
+/* When a case study ends on the grey <QuotePair> band, butt the
+   "Next case study" bar right up against it (no white stripe) and
+   separate the two greys with a hairline instead. Pages that end on
+   anything else keep the normal gap. */
+article:has(> [data-quote-pair]:last-child) + .next-case-study {
+  margin-top: 0;
+  border-top: 1px solid var(--color-neutral-200);
+}

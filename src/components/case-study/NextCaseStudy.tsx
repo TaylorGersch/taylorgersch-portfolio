@@ -19,7 +19,7 @@ export default function NextCaseStudy({ slug }: { slug: string }) {
   const next = CASE_STUDY_ORDER[(i + 1) % CASE_STUDY_ORDER.length];
 
   return (
-    <nav aria-label="Next case study" className="mt-14">
+    <nav aria-label="Next case study" className="next-case-study mt-14">
       <Link
         href={`/${next.slug}`}
         className="group flex min-h-[60px] items-center justify-between gap-4 bg-neutral-100 px-6 transition-colors duration-200 hover:bg-neutral-200 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-neutral-900 sm:pr-10 sm:pl-[60px]"
