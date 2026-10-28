@@ -92,4 +92,4 @@ Squarespace reference screenshots (`taylorgersch.squarespace.com/<slug>`) are gr
 ## Status notes (2026-10-28)
 - Airbnb and Stripe are DONE per Taylor (no placeholder copy left, no more screens coming) — ignore older notes above saying otherwise.
 - Hinge Health hero stays a stock photo on purpose, and it stays OFF the homepage carousel on purpose (reachable by URL + the next-case-study bar).
-- `NextCaseStudy.tsx` renders a 60px grey "Next case study → Name" bar above the footer on every case study. Order lives in `CASE_STUDY_ORDER`: BetterUp → Airbnb → Rutter → Stripe → Hinge Health → loops. Add TruStage / FLYR Labs there once they're built.
+- `NextCaseStudy.tsx` renders a 60px grey "Next case study → Name" bar above the footer on every case study. Order lives in `CASE_STUDY_ORDER`: BetterUp → Airbnb → Rutter → Stripe → Hinge Health → TruStage → FLYR Labs → loops to BetterUp.

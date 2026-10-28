@@ -2,8 +2,8 @@ import Link from "next/link";
 
 /**
  * Order of the "Next case study" bar at the bottom of each case study.
- * The last entry loops back to the first. Leave TruStage and FLYR Labs out
- * until they're built; a slug not in this list renders no bar.
+ * The last entry loops back to the first. A slug not in this list renders
+ * no bar.
  */
 export const CASE_STUDY_ORDER = [
   { slug: "betterup", title: "BetterUp" },
@@ -11,6 +11,8 @@ export const CASE_STUDY_ORDER = [
   { slug: "rutter", title: "Rutter" },
   { slug: "stripe", title: "Stripe" },
   { slug: "hinge-health", title: "Hinge Health" },
+  { slug: "trustage", title: "TruStage" },
+  { slug: "flyr-labs", title: "FLYR Labs" },
 ];
 
 export default function NextCaseStudy({ slug }: { slug: string }) {
