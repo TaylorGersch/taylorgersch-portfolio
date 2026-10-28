@@ -143,3 +143,17 @@ body {
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
 }
+
+/* No widows: keep the last line of body copy from being a single word.
+   `pretty` is supported in Chrome/Edge 117+ and Safari 26+; other
+   browsers just fall back to normal wrapping. Headings get `balance`
+   so 2-line titles split evenly. */
+article p,
+article li,
+article h5 {
+  text-wrap: pretty;
+}
+article h3,
+article h4 {
+  text-wrap: balance;
+}

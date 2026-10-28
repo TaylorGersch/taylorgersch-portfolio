@@ -501,7 +501,7 @@ export function UserStories({
   return (
     <div>
       {intro && <h4 className="mb-4 text-lg font-light text-neutral-900">{intro}</h4>}
-      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:gap-4">
+      <ul className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-4">
         {children}
       </ul>
     </div>
@@ -532,17 +532,25 @@ export function UserStory({ title, text }: { title: string; text: string }) {
  */
 export function Points({
   columns = "2",
+  spacing,
   children,
 }: {
   columns?: "2" | "4";
+  /** "loose" adds ~10px above the grid, for when it follows a lead-in
+   * paragraph inside a <Detail>. */
+  spacing?: "loose";
   children: React.ReactNode;
 }) {
   const cols =
     columns === "4"
       ? "sm:grid-cols-2 lg:grid-cols-4"
-      : "sm:grid-cols-2";
+      : "lg:grid-cols-2";
   return (
-    <div className={`grid grid-cols-1 gap-x-10 gap-y-8 ${cols}`}>{children}</div>
+    <div
+      className={`grid grid-cols-1 gap-x-10 gap-y-8 ${cols} ${spacing === "loose" ? "pt-2.5" : ""}`}
+    >
+      {children}
+    </div>
   );
 }
 
