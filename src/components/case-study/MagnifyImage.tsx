@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-const LENS_SIZE = 220;
+const LENS_SIZE = 440;
 const ZOOM = 2.5;
 
 /**
