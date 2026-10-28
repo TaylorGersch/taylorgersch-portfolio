@@ -1,9 +1,21 @@
 "use client";
 
-import { Children, isValidElement, useRef } from "react";
+import { Children, isValidElement, useEffect, useRef } from "react";
 import Image from "next/image";
 
-type SlideProps = { src: string; alt: string; caption: string };
+type SlideProps = {
+  src: string;
+  alt: string;
+  caption: string;
+  /** Optional first-frame image shown while a video slide loads. */
+  poster?: string;
+  /** Card aspect ratio, e.g. "16/9". Defaults to 3/2. Use the source's
+   * real ratio so it fills the card with no grey letterboxing. String on
+   * purpose (MDX expression-prop bug — see CLAUDE.md). */
+  ratio?: string;
+};
+
+const isVideo = (src: string) => /\.(mp4|webm)$/i.test(src);
 
 /**
  * Marker component — authored in MDX as a child of <ImageCarousel>. It
@@ -63,6 +75,27 @@ export default function ImageCarousel({
     .map((el) => el.props as SlideProps);
 
   const scrollerRef = useRef<HTMLDivElement>(null);
+
+  // Video slides autoplay muted on loop, like the GIFs they replace —
+  // except for visitors who've asked for reduced motion, who get a
+  // paused first frame with native play controls instead.
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.querySelectorAll("video").forEach((v) => {
+      if (reduce) {
+        v.pause();
+        v.controls = true;
+      } else {
+        // Belt-and-braces: some browsers skip the autoplay attribute on
+        // hydrated <video> elements, so start them explicitly too.
+        v.muted = true;
+        v.play().catch(() => {});
+      }
+    });
+  }, []);
+
   const dragRef = useRef({ dragging: false, startX: 0, startScrollLeft: 0 });
 
   if (slides.length === 0) return null;
@@ -132,14 +165,32 @@ export default function ImageCarousel({
                 ratio almost exactly, so object-contain shows the full
                 image with little to no letterboxing instead of the
                 object-cover crop that was cutting off the sides. */}
-            <div className="relative aspect-[3/2] w-full overflow-hidden bg-neutral-100">
-              <Image
-                src={slide.src}
-                alt={slide.alt}
-                fill
-                draggable={false}
-                className="object-contain"
-              />
+            <div
+              className="relative w-full overflow-hidden bg-neutral-100"
+              style={{ aspectRatio: slide.ratio ?? "3/2" }}
+            >
+              {isVideo(slide.src) ? (
+                <video
+                  src={slide.src}
+                  poster={slide.poster}
+                  aria-label={slide.alt}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  draggable={false}
+                  className="absolute inset-0 h-full w-full object-contain"
+                />
+              ) : (
+                <Image
+                  src={slide.src}
+                  alt={slide.alt}
+                  fill
+                  draggable={false}
+                  className="object-contain"
+                />
+              )}
             </div>
             <div className="flex items-baseline gap-3 text-sm">
               <span className="text-neutral-400">

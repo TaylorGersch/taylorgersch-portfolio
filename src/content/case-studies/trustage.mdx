@@ -9,65 +9,10 @@ heroObjectPosition: "center 36%"
 heroLabel: "TODO — real hero photo pending; the current heroImage is a generic stock placeholder (kids swimming), not a TruStage asset. Replace or remove heroImage once a real shot is available."
 ---
 
-{/*
-  PREP NOTE (structural scaffold only, no invented copy):
-  Mirrors docs/case-study-template.mdx. The three eyebrow/title values
-  below are the real, already-known image labels from the earlier
-  Squarespace review — not guessed. TwoCol/Detail copy is still TODO.
-  Once real screenshots exist, add image/imageWidth/imageHeight to each
-  <MediaSplit> (real pixel dimensions via PIL) to replace the placeholder.
-*/}
+<ImageCarousel>
 
-<SubSection>
+<CarouselSlide src="/videos/trustage-01-homepage.mp4" poster="/images/trustage-01-homepage-poster.jpg" ratio="16/9" alt="TruStage homepage redesign on desktop and mobile: the Save on car insurance hero, then the mobile layout scrolling through Let's plan your future, TruStage stats, and the credit union member lookup" caption="Website homepage redesign" />
+<CarouselSlide src="/videos/trustage-02-detail.mp4" poster="/images/trustage-02-detail-poster.jpg" ratio="16/9" alt="Building Security detail page on desktop and mobile: the Get financial security for your loved ones hero, then the mobile layout scrolling through the Family Ties story and the Got a minute quote form" caption="Building Security detail screen" />
+<CarouselSlide src="/videos/trustage-03-homepage-variation.mp4" poster="/images/trustage-03-homepage-variation-poster.jpg" ratio="16/9" alt="Homepage variation on desktop and mobile: the Insurance for all of life's needs hero, then a navy mobile section cycling through product cards like Life Insurance and AD&amp;D" caption="Website homepage variation" />
 
-<MediaSplit eyebrow="Website Design" title="Homepage Redesign" imageAlt="Website homepage redesign — screenshot pending" side="right">
-
-<TwoCol
-  overview="TODO — overview + role copy for the homepage redesign."
-  problem="TODO — the problem the redesign addressed."
-/>
-
-<Detail title="The solution">
-
-TODO — what shipped for the homepage redesign.
-
-</Detail>
-
-</MediaSplit>
-
-</SubSection>
-
-<SubSection>
-
-<MediaSplit eyebrow="Design System" title="Building Security Interior Screen" imageAlt="Building security interior screen — screenshot pending" side="left">
-
-<TwoCol
-  overview="TODO — overview + role copy for this screen."
-  problem="TODO — the problem this screen addressed."
-/>
-
-<Detail title="The solution">
-
-TODO — what shipped for the building security interior screen.
-
-</Detail>
-
-</MediaSplit>
-
-</SubSection>
-
-{/*
-  "Website homepage variation" from the original site — a single
-  supplementary shot, not a whole section. Left as a plain full-width
-  ImageBlock rather than a MediaSplit; swap the placeholder for a real
-  <Image> once the export exists (see README "Replace the placeholder
-  images" for the exact swap).
-*/}
-<div className="border-t border-neutral-200 px-6 py-14 sm:px-10">
-  <ImageBlock label="Website homepage variation — screenshot pending" ratio="aspect-[16/10]" />
-</div>
-
-{/*
-  Optional, once Taylor has client quotes for TruStage — see
-  docs/case-study-template.mdx for the <QuotePair> markup pattern.
-*/}
+</ImageCarousel>
