@@ -1,6 +1,7 @@
 import { Children, isValidElement } from "react";
 import Image from "next/image";
 import PlaceholderImage from "../PlaceholderImage";
+import MagnifyImage from "./MagnifyImage";
 
 export function Meta({
   category,
@@ -141,8 +142,13 @@ export function MediaSplit({
   videoPoster,
   placeholderRatio = "aspect-[4/3]",
   side = "right",
+  magnify,
   children,
 }: {
+  /** "true" adds a hover magnifier lens + click/tap to view full size
+   * (see <MagnifyImage>). String, not boolean, because of the MDX
+   * expression-prop bug described above. */
+  magnify?: "true" | "false";
   eyebrow?: string;
   title?: string;
   /** Override the gap between the title and the body content below it —
@@ -225,6 +231,14 @@ export function MediaSplit({
             {videoWebm && <source src={videoWebm} type="video/webm" />}
             {videoMp4 && <source src={videoMp4} type="video/mp4" />}
           </video>
+        ) : image && widthNum && heightNum && magnify === "true" ? (
+          <MagnifyImage
+            src={image}
+            alt={imageAlt}
+            width={widthNum}
+            height={heightNum}
+            sizes="(min-width: 640px) 50vw, 100vw"
+          />
         ) : image && widthNum && heightNum ? (
           <Image
             src={image}
