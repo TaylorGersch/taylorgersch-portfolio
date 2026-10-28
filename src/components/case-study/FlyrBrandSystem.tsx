@@ -8,11 +8,10 @@ import { useEffect, useRef, useState } from "react";
  * inline SVG so they stay crisp and can move) plus the supporting icon
  * set, grouped by where each icon is used on the site.
  *
- * Illustration motion: as the section scrolls through the viewport the
- * shapes spread apart, peak at mid-screen, then draw back together,
- * matching the "expand and contract on scroll" behavior from the live
- * site. `t` runs 0 → 1 → 0 across the pass. Visitors with
- * prefers-reduced-motion get a fixed, half-open state instead.
+ * Illustration motion: the shapes spread apart in one smooth, timed
+ * motion once the cards are mostly on screen, and draw back together
+ * after they scroll away (see useScrollPulse). Visitors with
+ * prefers-reduced-motion get the open state with no animation.
  *
  * Geometry comes from Taylor's Figma exports (contracted and expanded
  * states of each illustration on the same canvas), so the end states
@@ -23,36 +22,54 @@ const STROKE = "#4462F7";
 
 function useScrollPulse() {
   const ref = useRef<HTMLDivElement>(null);
-  const [t, setT] = useState(0.5);
+  const [t, setT] = useState(0);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const id = requestAnimationFrame(() => setT(1));
+      return () => cancelAnimationFrame(id);
+    }
+    // Trigger-based, not scroll-linked: the shapes hold still while the
+    // page scrolls, then open in one timed motion once the cards are
+    // mostly visible, and close only after they've almost left the
+    // screen. Visibility is measured against whichever is smaller, the
+    // cards or the viewport, so it still triggers on short windows.
+    const DURATION = 1400;
+    let current = 0;
+    let target = 0;
     let frame = 0;
-    const update = () => {
-      frame = 0;
-      const r = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const clamp = (n: number) => Math.min(1, Math.max(0, n));
-      // Opens as the cards scroll up from 95% to 45% of the viewport,
-      // holds fully open while they're comfortably in view, then closes
-      // as their bottom edge rises from 55% to 5% of the viewport, so all
-      // of the motion happens on screen where it can be seen.
-      const open = clamp((vh * 0.95 - r.top) / (vh * 0.5));
-      const close = clamp((r.bottom - vh * 0.05) / (vh * 0.5));
-      const p = Math.min(open, close);
-      setT(p * p * (3 - 2 * p)); // smoothstep easing
+    let from = 0;
+    let start = 0;
+    const ease = (x: number) =>
+      x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    const tick = (now: number) => {
+      const k = Math.min(1, (now - start) / DURATION);
+      current = from + (target - from) * ease(k);
+      setT(current);
+      frame = k < 1 ? requestAnimationFrame(tick) : 0;
     };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update);
+    const go = (next: number) => {
+      if (next === target) return;
+      target = next;
+      from = current;
+      start = performance.now();
+      if (!frame) frame = requestAnimationFrame(tick);
     };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const vh = entry.rootBounds?.height ?? window.innerHeight;
+        const full = Math.min(entry.boundingClientRect.height, vh);
+        const seen = entry.intersectionRect.height / full;
+        if (seen >= 0.75) go(1);
+        else if (seen <= 0.15) go(0);
+      },
+      { threshold: Array.from({ length: 21 }, (_, i) => i / 20) },
+    );
+    observer.observe(el);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      observer.disconnect();
       if (frame) cancelAnimationFrame(frame);
     };
   }, []);
