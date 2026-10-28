@@ -1,5 +1,6 @@
 import Image from "next/image";
 import PlaceholderImage from "../PlaceholderImage";
+import TypewriterText from "./TypewriterText";
 import type { CaseStudyFrontmatter } from "@/lib/case-studies";
 
 export default function CaseStudyHero({
@@ -11,9 +12,10 @@ export default function CaseStudyHero({
     return (
       <section className="flex min-h-[70vh] items-center justify-center bg-gradient-to-br from-indigo-950 via-purple-500/70 to-orange-200 px-6 sm:px-10">
         <div className="rounded-3xl bg-white/10 px-8 py-10 backdrop-blur-md sm:px-16 sm:py-14">
-          <p className="typewriter-caret text-2xl font-medium text-white sm:text-5xl">
-            {frontmatter.heroText}
-          </p>
+          <TypewriterText
+            text={frontmatter.heroText ?? ""}
+            className="text-2xl font-light text-white sm:text-5xl"
+          />
         </div>
       </section>
     );

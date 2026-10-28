@@ -1,3 +1,4 @@
+import { Children, isValidElement } from "react";
 import Image from "next/image";
 import PlaceholderImage from "../PlaceholderImage";
 
@@ -360,7 +361,7 @@ export function Detail({
   return (
     <div>
       <h4 className="mb-3 text-lg font-light text-neutral-900">{title}</h4>
-      <div className="space-y-3 text-base leading-6 text-black">
+      <div className="space-y-3 text-base leading-6 text-black [&_li]:mt-2 [&_li]:pl-1 [&_ul]:list-disc [&_ul]:pl-5">
         {children}
       </div>
     </div>
@@ -388,5 +389,135 @@ export function Stub({
         TODO — this section was empty on the live site. Add copy + screenshots here.
       </p>
     </div>
+  );
+}
+
+/**
+ * A row of short "what I did" pillars (e.g. Product / Marketing / Brand)
+ * shown right under the page's <Meta> intro. Each <Pillar> takes a small
+ * uppercase `label`, a `title`, and its body copy as children.
+ */
+export function Pillars({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="grid grid-cols-1 gap-10 border-t border-neutral-200 px-6 py-12 sm:grid-cols-3 sm:gap-x-12 sm:gap-y-0 sm:pr-10 sm:pl-[60px]">
+      {children}
+    </div>
+  );
+}
+
+export function Pillar({
+  label,
+  title,
+  children,
+}: {
+  label: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    // On desktop each pillar is a 3-row subgrid of the parent, so every
+    // label, headline and body lines up across columns: if one headline
+    // wraps to 2 lines, all three headline rows become 2 lines tall and the
+    // body copy starts at the same height everywhere.
+    <div className="sm:row-span-3 sm:grid sm:grid-rows-subgrid">
+      <p className="text-xs font-medium tracking-[0.12em] text-neutral-500 uppercase">
+        {label}
+      </p>
+      <h3 className="mt-3 text-xl leading-snug font-light text-neutral-900">
+        {title}
+      </h3>
+      <div className="mt-3 text-base leading-6 text-neutral-700">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Same two-column rhythm and margins as <MediaSplit>, but the second
+ * column holds content (e.g. a <UserStories> grid) instead of an image.
+ * Expects exactly two <SplitColumn> children: copy first, aside second.
+ */
+export function ContentSplit({
+  eyebrow,
+  title,
+  children,
+}: {
+  eyebrow?: string;
+  title?: string;
+  children: React.ReactNode;
+}) {
+  const [main, aside] = Children.toArray(children).filter(isValidElement);
+  // Heading sits in its own row above the first column, so the aside's
+  // first line starts level with the copy's first subheading (e.g.
+  // "Overview + Role") rather than with the eyebrow.
+  return (
+    <div className="grid grid-cols-1 gap-x-12 px-6 py-10 sm:grid-cols-2 sm:py-14 sm:pr-10 sm:pl-[60px]">
+      <div className="mb-8">
+        {eyebrow && <p className="text-sm text-neutral-500">{eyebrow}</p>}
+        {title && (
+          <h3 className="mt-2 text-3xl tracking-tight text-neutral-800 sm:text-4xl">
+            {title}
+          </h3>
+        )}
+      </div>
+      <div className="flex flex-col sm:col-start-1 sm:row-start-2">{main}</div>
+      <div className="mt-10 sm:col-start-2 sm:row-start-2 sm:mt-0">{aside}</div>
+    </div>
+  );
+}
+
+export function SplitColumn({ children }: { children: React.ReactNode }) {
+  return <div className="flex flex-col gap-10">{children}</div>;
+}
+
+function GridIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      className="h-4 w-4 shrink-0 text-neutral-700"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.4"
+    >
+      {[2.5, 8, 13.5].map((cy) =>
+        [2.5, 8, 13.5].map((cx) => (
+          <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="1.6" />
+        )),
+      )}
+    </svg>
+  );
+}
+
+/** Intro line + 2-column grid of <UserStory> cards. */
+export function UserStories({
+  intro,
+  children,
+}: {
+  intro?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      {intro && <h4 className="mb-4 text-lg font-light text-neutral-900">{intro}</h4>}
+      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:gap-4">
+        {children}
+      </ul>
+    </div>
+  );
+}
+
+export function UserStory({ title, text }: { title: string; text: string }) {
+  return (
+    <li className="flex flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white transition-colors duration-200 hover:border-neutral-300">
+      <div className="flex items-center gap-2.5 px-4 py-3">
+        <GridIcon />
+        <h5 className="text-sm font-medium text-neutral-900">{title}</h5>
+      </div>
+      <p className="flex-1 border-t border-neutral-200 bg-neutral-50 px-4 py-3 text-sm leading-5 text-neutral-700">
+        {text}
+      </p>
+    </li>
   );
 }

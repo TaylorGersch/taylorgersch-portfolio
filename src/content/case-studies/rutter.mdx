@@ -8,67 +8,78 @@ heroText: "AI-powered financial integrations."
 ---
 
 {/*
-  PREP NOTE (structural scaffold only, no invented copy):
-  This mirrors docs/case-study-template.mdx. The eyebrow/title values below
-  are the two step names that were already known from the earlier
-  Squarespace review — they're real, not guessed. Everything marked
-  TODO/ALL-CAPS still needs Taylor's real copy + image exports. Once real
-  images exist, add `image`, `imageWidth`, `imageHeight` to each
-  <MediaSplit> (real pixel dimensions via PIL) and the placeholder swaps
-  out automatically — no structural changes needed.
+  Structure (agreed with Taylor 2026-10-28, from her Rutter interview deck):
+  Pillars intro → 1. Data Sync overview + two problems (user-story cards)
+  → 2. Part one: the walkthrough (data-sync-walkthrough.gif)
+  → 3. Part two: three levels of control (needs a clean QuickBooks
+  Settings side-panel export from Taylor)
+  → 4. Added control: batching (initial-sync-batching-walkthrough.gif)
+  → The outcome. Built one section at a time; sections 2–4 + outcome
+  are next.
 */}
 
-<div className="border-t border-neutral-200 px-6 py-14 sm:px-10">
-  <ImageBlock label='Product screenshot — "Map your PayPal accounts to QuickBooks"' ratio="aspect-[16/10]" />
-</div>
+<Pillars>
+
+<Pillar label="Product" title="Cut onboarding friction for API customers">
+
+After a product audit, I redesigned the dashboard so developers could onboard themselves. That included new guided tours for sandbox and production, and a rebuilt Data Sync Configuration page.
+
+</Pillar>
+
+<Pillar label="Marketing" title="Gave Rutter a consistent voice across channels">
+
+I own Rutter's go-to-market content: LinkedIn, email campaigns, customer stories and the blog. Everything is written for the engineering, product and operations leaders who buy Rutter.
+
+</Pillar>
+
+<Pillar label="Brand" title="Refreshed the brand and redesigned the website">
+
+I led a full brand refresh and website redesign, from information architecture to custom illustrations. Alongside the CEO and COO, I helped define Rutter's mission, values and market position.
+
+</Pillar>
+
+</Pillars>
 
 <SubSection>
 
-<MediaSplit eyebrow="Product Design" title="Transaction & Bank Account Mapping" imageAlt="Transaction and bank account mapping — screenshots pending" side="right">
+<ContentSplit eyebrow="Product Design" title="Data Sync, made simple">
 
-<TwoCol
-  overview="TODO — overview + role copy for this step."
-  problem="TODO — the problem this step addressed."
-/>
+<SplitColumn>
 
-<Detail title="The solution">
+<Detail title="Overview + Role">
 
-TODO — what shipped for transaction/bank account mapping.
+Rutter is a unified API that connects B2B software to the accounting, commerce, ads and banking platforms their customers use, like QuickBooks, Xero and NetSuite. The Data Sync Configuration page controls how and when that data arrives, but new customers couldn't set it up on their own and relied on Customer Success to get started.
 
-</Detail>
-
-</MediaSplit>
-
-</SubSection>
-
-<SubSection>
-
-{/*
-  This step's label was clipped off-screen on the live site — the desktop
-  viewport cut this section off with no horizontal scroll, so double check
-  the exact wording with Taylor before publishing rather than trusting
-  "Accounting Sync" as final.
-*/}
-<MediaSplit eyebrow="Product Design" title="Accounting Sync" imageAlt="Accounting sync — screenshots pending" side="left">
-
-<TwoCol
-  overview="TODO — overview + role copy for this step."
-  problem="TODO — the problem this step addressed."
-/>
-
-<Detail title="The solution">
-
-TODO — what shipped for accounting sync.
+I redesigned the page around how customers actually set up, and added the dashboard's first guided walkthrough, working alongside a product manager.
 
 </Detail>
 
-</MediaSplit>
+<Detail title="The problem">
+
+New customers couldn't understand the page, and they couldn't make it do what they needed.
+
+- **Hard to understand:** two kinds of sync, layered settings, and sandbox vs. production, with nothing on the page explaining any of it.
+- **Hard to control:** every customer needed different data, at a different frequency, for different reasons.
+
+</Detail>
+
+</SplitColumn>
+
+<SplitColumn>
+
+<UserStories intro="The user stories showed how wide the range was:">
+
+<UserStory title="Fintech Platform" text="Wanted to choose which endpoints sync for each platform." />
+<UserStory title="Enterprise Bank" text="Wanted to request only transaction data, not full financials, so more users would agree to connect." />
+<UserStory title="Expense Management" text="Needed only transactions and vendors, to keep costs down." />
+<UserStory title="Payments & Consent" text="Needed to be blocked from data its end users hadn't consented to share." />
+<UserStory title="Accounting Automation" text="Wanted to sync less often to cut API costs." />
+<UserStory title="Lending & Underwriting" text="Needed financial statements for underwriting, but no real-time transaction sync." />
+
+</UserStories>
+
+</SplitColumn>
+
+</ContentSplit>
 
 </SubSection>
-
-{/*
-  Optional, once Taylor has supplementary screenshots or client quotes for
-  Rutter — see docs/case-study-template.mdx for the <ImageCarousel> /
-  <QuotePair> markup pattern. Leave omitted until there's real content for
-  either.
-*/}
