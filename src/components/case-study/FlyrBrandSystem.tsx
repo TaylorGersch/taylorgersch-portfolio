@@ -34,10 +34,15 @@ function useScrollPulse() {
       frame = 0;
       const r = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      // 0 when the element's top enters at the bottom of the viewport,
-      // 1 when its bottom leaves at the top.
-      const p = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
-      setT(Math.sin(Math.PI * p));
+      const clamp = (n: number) => Math.min(1, Math.max(0, n));
+      // Opens as the cards scroll up from 95% to 45% of the viewport,
+      // holds fully open while they're comfortably in view, then closes
+      // as their bottom edge rises from 55% to 5% of the viewport, so all
+      // of the motion happens on screen where it can be seen.
+      const open = clamp((vh * 0.95 - r.top) / (vh * 0.5));
+      const close = clamp((r.bottom - vh * 0.05) / (vh * 0.5));
+      const p = Math.min(open, close);
+      setT(p * p * (3 - 2 * p)); // smoothstep easing
     };
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(update);
@@ -61,14 +66,14 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 function EllipsesIllustration({ t }: { t: number }) {
   const ellipses = [
     lerp(362, 362, t),
-    lerp(455, 546, t),
-    lerp(537, 746, t),
+    lerp(400, 600, t),
+    lerp(440, 840, t),
   ];
-  const circle = lerp(1093, 1306, t);
+  const circle = lerp(940, 1440, t);
   // Keep the whole group centered as it widens.
-  const shift = (1890 - (circle + 583)) / 2;
+  const shift = (2030 - (circle + 583)) / 2;
   return (
-    <svg viewBox="0 0 1890 1167" className="h-auto w-full" aria-hidden>
+    <svg viewBox="0 0 2030 1167" className="h-auto w-full" aria-hidden>
       <g
         transform={`translate(${shift} 0)`}
         fill="none"
@@ -110,12 +115,12 @@ const squarePoints = (x: number, y: number) =>
 
 function SquaresIllustration({ t }: { t: number }) {
   const squares = [
-    [lerp(245, 238, t), lerp(552, 562, t)],
-    [lerp(325, 452, t), lerp(605, 667, t)],
-    [lerp(625, 662, t), lerp(775, 777, t)],
+    [lerp(300, 150, t), lerp(560, 520, t)],
+    [lerp(340, 440, t), lerp(590, 670, t)],
+    [lerp(380, 730, t), lerp(620, 820, t)],
   ];
   return (
-    <svg viewBox="200 320 1500 1320" className="h-auto w-full" aria-hidden>
+    <svg viewBox="80 280 1760 1580" className="h-auto w-full" aria-hidden>
       <g fill="none" stroke={STROKE} strokeOpacity="0.55" strokeWidth="1.25">
         {squares.map(([x, y], i) => (
           <polygon
@@ -199,12 +204,12 @@ export default function FlyrBrandSystem() {
             <ul className="grid grid-cols-4 gap-3">
               {group.icons.map((icon) => (
                 <li key={icon.file} className="flex flex-col items-center gap-2">
-                  <div className="flex aspect-square w-full items-center justify-center rounded-lg bg-[#1D1729]">
+                  <div className="flex aspect-square w-[70%] items-center justify-center rounded-lg bg-[#1D1729]">
                     <Image
                       src={`/images/flyr-icons/${icon.file}.png`}
                       alt=""
-                      width={100}
-                      height={100}
+                      width={300}
+                      height={300}
                       className="h-auto w-[55%]"
                     />
                   </div>
