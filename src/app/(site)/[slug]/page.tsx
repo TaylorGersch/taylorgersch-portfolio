@@ -25,6 +25,9 @@ import {
   SplitColumn,
   UserStories,
   UserStory,
+  Points,
+  Point,
+  TextSection,
 } from "@/components/case-study/CaseStudyBlocks";
 import ImageCarousel, {
   CarouselSlide,
@@ -75,6 +78,9 @@ export default async function CaseStudyPage({
       SplitColumn,
       UserStories,
       UserStory,
+      Points,
+      Point,
+      TextSection,
       ImageCarousel,
       CarouselSlide,
       ProductWalkthrough,

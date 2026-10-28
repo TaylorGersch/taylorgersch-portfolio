@@ -521,3 +521,68 @@ export function UserStory({ title, text }: { title: string; text: string }) {
     </li>
   );
 }
+
+/**
+ * Bullet-free list of key points: each <Point> is a bold title on its own
+ * line with regular body copy underneath, laid out side by side in a grid
+ * (2 columns by default, so 4 points form a 2×2 block). Pass
+ * columns="4" for a single row of four on wide screens. Stacks to one
+ * column on mobile. `columns` is a string on purpose (see the MDX
+ * numeric-prop note on <MediaSplit>).
+ */
+export function Points({
+  columns = "2",
+  children,
+}: {
+  columns?: "2" | "4";
+  children: React.ReactNode;
+}) {
+  const cols =
+    columns === "4"
+      ? "sm:grid-cols-2 lg:grid-cols-4"
+      : "sm:grid-cols-2";
+  return (
+    <div className={`grid grid-cols-1 gap-x-10 gap-y-8 ${cols}`}>{children}</div>
+  );
+}
+
+export function Point({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <h5 className="text-base leading-6 font-semibold text-black">{title}</h5>
+      <div className="mt-1 text-base leading-6 text-black">{children}</div>
+    </div>
+  );
+}
+
+/**
+ * Full-width text-only section (no image column) with the same eyebrow /
+ * title treatment and 60px content margin as <MediaSplit>.
+ */
+export function TextSection({
+  eyebrow,
+  title,
+  children,
+}: {
+  eyebrow?: string;
+  title?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="px-6 py-10 sm:py-14 sm:pr-10 sm:pl-[60px]">
+      {eyebrow && <p className="text-sm text-neutral-500">{eyebrow}</p>}
+      {title && (
+        <h3 className="mt-2 mb-8 text-3xl tracking-tight text-neutral-800 sm:text-4xl">
+          {title}
+        </h3>
+      )}
+      <div className="flex flex-col gap-10">{children}</div>
+    </div>
+  );
+}
