@@ -100,3 +100,65 @@ New customers couldn't understand the page, and they couldn't make it do what th
 </MediaSplit>
 
 </SubSection>
+
+<SubSection>
+
+<MediaSplit eyebrow="Part two: the information architecture" title="Three levels of control" image="/images/rutter-three-levels-of-control.webp" imageAlt="Data Sync Configuration page with the QuickBooks Settings side panel open: platform sync frequency inherited from the organization default of every 6 hours, sync status and history, and per-object toggles for Account, Bills, Customers, Invoices and Payments" imageWidth="2379" imageHeight="1466" side="right">
+
+<Detail title="The solution">
+
+- **Inherit by default:** set the schedule once for the whole organization, and every platform and object follows it automatically.
+- **Override where it matters:** each platform shows a "Default" or "Custom" badge, so customers can see at a glance which settings are their own.
+- **Edit in context:** side panels open a single platform or object without losing sight of the rest of the hierarchy.
+- **Safe to change:** changing the org default asks for confirmation first, because it affects everything that inherits it, and "Reset to org default" undoes any override.
+
+</Detail>
+
+</MediaSplit>
+
+</SubSection>
+
+<SubSection>
+
+<MediaSplit eyebrow="Added control" title="When full history isn't enough" image="/images/rutter-initial-sync-batching.gif" imageAlt="Animated walkthrough of the Initial Sync Batching side panel: a short guided tour shows picking a category, setting a batch's time frame and objects, adding a pre-curated bucket like All Accounts Payable objects, and saving, with four batches listed" imageWidth="1960" imageHeight="1208" side="left">
+
+<Detail title="The solution">
+
+In testing, heavy objects held up everything else from reaching "ready." I added batching so customers can give slow objects their own batch and time frame, and gave the panel its own short tour using the same walkthrough pattern.
+
+</Detail>
+
+</MediaSplit>
+
+</SubSection>
+
+<SubSection>
+
+<ContentSplit eyebrow="Results" title="The outcome">
+
+<SplitColumn>
+
+<Detail title="What changed">
+
+- **Self-serve onboarding:** new customers learn the page from the page itself. The walkthrough replaces the setup call.
+- **Control for every use case:** organization, platform and object settings cover all six customer types we started with, from consent limits to cost cutting.
+- **Faster first sync:** batching keeps heavy objects from holding up the rest, so customers get usable data sooner.
+- **CS time back:** fewer setup calls frees the Customer Success team for higher-value work.
+
+</Detail>
+
+</SplitColumn>
+
+<SplitColumn>
+
+<Detail title="Next time?">
+
+I'd track tour completion and skip rates from launch to tie the walkthrough directly to fewer support requests.
+
+</Detail>
+
+</SplitColumn>
+
+</ContentSplit>
+
+</SubSection>
