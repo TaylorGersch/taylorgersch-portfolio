@@ -88,3 +88,8 @@ Squarespace reference screenshots (`taylorgersch.squarespace.com/<slug>`) are gr
 - She's non-technical — describe changes in plain terms, lead with a screenshot, not a diff.
 - She has strong, specific design preferences (documented in her requests): TailwindCSS with a clean design system, full-height/centered layouts, smooth hover effects, WCAG AA accessibility, explicit handling of loading/empty/error states, 2-space indent for TS/TSX, 4-space for MD.
 - Prefers changes broken into reviewable chunks rather than one giant pass — check in with a screenshot before moving to the next section.
+
+## Status notes (2026-10-28)
+- Airbnb and Stripe are DONE per Taylor (no placeholder copy left, no more screens coming) — ignore older notes above saying otherwise.
+- Hinge Health hero stays a stock photo on purpose, and it stays OFF the homepage carousel on purpose (reachable by URL + the next-case-study bar).
+- `NextCaseStudy.tsx` renders a 60px grey "Next case study → Name" bar above the footer on every case study. Order lives in `CASE_STUDY_ORDER`: BetterUp → Airbnb → Rutter → Stripe → Hinge Health → loops. Add TruStage / FLYR Labs there once they're built.

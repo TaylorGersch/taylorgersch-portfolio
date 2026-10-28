@@ -7,6 +7,7 @@ import {
 } from "@/lib/case-studies";
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 import SiteChrome from "@/components/SiteChrome";
+import NextCaseStudy from "@/components/case-study/NextCaseStudy";
 import {
   Meta,
   TwoCol,
@@ -108,6 +109,7 @@ export default async function CaseStudyPage({
 
         {content}
       </article>
+      <NextCaseStudy slug={slug} />
     </SiteChrome>
   );
 }
