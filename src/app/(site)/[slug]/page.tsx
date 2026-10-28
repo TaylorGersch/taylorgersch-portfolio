@@ -8,6 +8,7 @@ import {
 import CaseStudyHero from "@/components/case-study/CaseStudyHero";
 import SiteChrome from "@/components/SiteChrome";
 import NextCaseStudy from "@/components/case-study/NextCaseStudy";
+import FlyrBrandSystem from "@/components/case-study/FlyrBrandSystem";
 import {
   Meta,
   TwoCol,
@@ -88,6 +89,7 @@ export default async function CaseStudyPage({
       WalkthroughRegion,
       NotificationFrameworkSplit,
       ScrollSplit,
+      FlyrBrandSystem,
     },
     options: { parseFrontmatter: false },
   });

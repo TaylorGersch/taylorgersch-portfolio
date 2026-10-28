@@ -96,7 +96,11 @@ export function ScrollVisual({
   label,
   frameHeight,
   expandable = true,
+  fade = "true",
 }: {
+  /** "false" removes the gradient fade on the frame's far edge (string
+   * because of the MDX expression-prop bug). */
+  fade?: "true" | "false";
   orientation: "horizontal" | "vertical";
   image: string;
   imageAlt: string;
@@ -236,14 +240,16 @@ export function ScrollVisual({
             sizes={sizes}
           />
         </div>
-        <div
-          aria-hidden
-          className={
-            isHorizontal
-              ? "pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-neutral-100 to-transparent"
-              : "pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-neutral-100 to-transparent"
-          }
-        />
+        {fade !== "false" && (
+          <div
+            aria-hidden
+            className={
+              isHorizontal
+                ? "pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-neutral-100 to-transparent"
+                : "pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-neutral-100 to-transparent"
+            }
+          />
+        )}
         {expandable && (
           <button
             type="button"
@@ -320,6 +326,7 @@ export function ScrollVisual({
                       : `min(82vh, ${MODAL_VERTICAL_FRAME_HEIGHT_PX}px)`
                   }
                   expandable={false}
+                  fade={fade}
                 />
               </div>
             </div>
@@ -448,9 +455,11 @@ export function ScrollSplit({
   scrollImageHeight,
   scrollOrientation = "vertical",
   scrollLabel,
+  scrollFade,
   side = "right",
   children,
 }: {
+  scrollFade?: "true" | "false";
   eyebrow?: string;
   title?: string;
   titleGapClassName?: string;
@@ -517,6 +526,7 @@ export function ScrollSplit({
           imageWidth={scrollImageWidth}
           imageHeight={scrollImageHeight}
           label={scrollLabel}
+          fade={scrollFade}
         />
       </div>
     </div>
